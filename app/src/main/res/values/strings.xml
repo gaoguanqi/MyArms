@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MyArms</string>
+
+    <!--网络-->
+    <string name="connect_error">网络连接失败,请检查网络</string>
+    <string name="connect_timeout">连接超时,请稍后再试</string>
+    <string name="bad_network">服务器异常</string>
+    <string name="parse_error">解析服务器响应数据失败</string>
+    <string name="url_error">请求地址不存在</string>
+    <string name="service_refuse">请求被服务器拒绝</string>
+    <string name="request_error">请求被重定向到其他页面</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="http_error">网络异常</string>
+    <string name="response_return_error">服务器返回数据失败</string>
+    <string name="loading">请稍候…</string>
+
+</resources>
