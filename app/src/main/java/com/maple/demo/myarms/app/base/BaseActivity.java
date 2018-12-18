@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.base.delegate.IActivity;
 import com.jess.arms.integration.cache.Cache;
@@ -84,6 +85,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
+            //设为竖屏
+            if(usePortrait()){
+                ScreenUtils.setPortrait(this);
+            }
             setContentView(savedInstanceState);
         } catch (Exception e) {
             if (e instanceof InflateException) {throw e;}
@@ -157,14 +162,20 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * 是否使用ImmersionBar
      * @return
      */
-    public boolean useImmersionBar() { return true; }
+    protected boolean useImmersionBar() { return true; }
 
     /**
      * 是否有titleBar
      * @return
      */
-    public boolean useToolBar() { return true; }
+    protected boolean useToolBar() { return true; }
 
+
+    /**
+     * 是否为竖屏
+     * @return
+     */
+    protected boolean usePortrait() { return true; }
 
     /**
      * 初始化沉浸式状态栏

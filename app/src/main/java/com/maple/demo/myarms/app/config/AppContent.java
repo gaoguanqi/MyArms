@@ -10,9 +10,8 @@ public interface AppContent {
      * 需要以键值对持久化到SharePerference文件中的Key常量值
      */
     public static class SaveInfoKey {
+        public static final String HASWECLOME = "hasWeclome";
         public static final String HASLOGIN = "hasLogin";
-        public static final String ACCOUNT_ID = "account_id";
-
     }
 
     /**

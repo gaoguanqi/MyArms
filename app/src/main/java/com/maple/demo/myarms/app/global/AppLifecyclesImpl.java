@@ -3,6 +3,7 @@ package com.maple.demo.myarms.app.global;
 import android.app.Application;
 import android.content.Context;
 
+import com.blankj.utilcode.util.Utils;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.BuildConfig;
@@ -57,12 +58,13 @@ public class AppLifecyclesImpl implements AppLifecycles {
         ArmsUtils.obtainAppComponentFromContext(application).extras()
                 .put(RefWatcher.class.getName(),
                 BuildConfig.DEBUG ? LeakCanary.install(application) : RefWatcher.DISABLED);
+
+        initUtils(application);
     }
 
-
-
-
-
+    private void initUtils(Application application) {
+        Utils.init(application);
+    }
 
 
     @Override
