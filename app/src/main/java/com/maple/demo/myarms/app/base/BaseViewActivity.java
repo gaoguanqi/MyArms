@@ -1,6 +1,5 @@
 package com.maple.demo.myarms.app.base;
 
-import com.jess.arms.base.BaseActivity;
 import com.jess.arms.mvp.IPresenter;
 
 /**
@@ -9,7 +8,6 @@ import com.jess.arms.mvp.IPresenter;
  * description:
  */
 public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivity<T> {
-
 
 
 }

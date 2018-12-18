@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.InflateException;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.base.delegate.IActivity;
@@ -18,6 +21,8 @@ import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.utils.ArmsUtils;
+import com.maple.demo.myarms.R;
+import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -43,7 +48,7 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable {
+public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable,ToolbarConfig.OnToolbarLitener {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
@@ -94,7 +99,9 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             setContentView(layoutResID);
             //绑定到butterknife
             mUnbinder = ButterKnife.bind(this);
-            initToolbar();
+            if(useToolBar()){
+                initToolbar();
+            }
             if(useImmersionBar()){
                 initImmersionBar();
             }
@@ -152,6 +159,12 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     public boolean useImmersionBar() { return true; }
 
+    /**
+     * 是否有titleBar
+     * @return
+     */
+    public boolean useToolBar() { return true; }
+
 
     /**
      * 初始化沉浸式状态栏
@@ -163,7 +176,51 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     private void initToolbar() {
+        View toolbar = findViewById(R.id.toolbar);
+        if (toolbar == null) {
+            return;
+        }
+        setSupportActionBar((android.support.v7.widget.Toolbar) toolbar);
+        if (null != getSupportActionBar()) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
+        ToolbarConfig config = getToolbarConfig();
+        if(config == null){
+            return;
+        }
+
+        //设置UI标题
+        if(config.hasTitle){
+            findViewById(R.id.toolbar_title).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.toolbar_title)).setText(config.title);
+        }
+        //返回文字
+        if (config.hasBackText) {
+            TextView tvBackText = (TextView)findViewById(R.id.tv_bar_back);
+            tvBackText.setVisibility(View.VISIBLE);
+            tvBackText.setText(config.backText);
+            tvBackText.setOnClickListener(v -> config.litener.onToolbarClick(R.id.tv_bar_back));
+        }
+        //设置文字
+        if (config.hasSettingText) {
+            TextView tvSettingText = (TextView)findViewById(R.id.tv_bar_setting);
+            tvSettingText.setVisibility(View.VISIBLE);
+            tvSettingText.setText(config.settingText);
+            tvSettingText.setOnClickListener(v -> config.litener.onToolbarClick(R.id.tv_bar_setting));
+        }
+        //返回按钮
+        if (config.hasBack) {
+            ImageButton ibtnBack = (ImageButton)findViewById(R.id.ibtn_bar_back);
+            ibtnBack.setVisibility(View.VISIBLE);
+            ibtnBack.setOnClickListener(v -> config.litener.onToolbarClick(R.id.ibtn_bar_back));
+        }
+        //设置按钮
+        if (config.hasSetting) {
+            ImageButton ibtnSetting = (ImageButton)findViewById(R.id.ibtn_bar_setting);
+            ibtnSetting.setVisibility(View.VISIBLE);
+            ibtnSetting.setOnClickListener(v -> config.litener.onToolbarClick(R.id.ibtn_bar_setting));
+        }
     }
 
 
@@ -177,4 +234,44 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             mImmersionBar.init();
         }
     }
+
+    protected ToolbarConfig getToolbarConfig(){
+        return null;
+    }
+
+    @Override
+    public void onToolbarClick(int id) {
+        switch (id){
+            case R.id.tv_bar_back:
+                onToolbarBackText();
+                break;
+            case R.id.ibtn_bar_back:
+                onToolbarBack();
+                break;
+            case R.id.tv_bar_setting:
+                onToolbarSettingText();
+                break;
+            case R.id.ibtn_bar_setting:
+                onToolbarSetting();
+                break;
+             default:
+        }
+    }
+
+    protected void onToolbarSetting() {
+
+    }
+
+    protected void onToolbarSettingText() {
+
+    }
+
+    protected void onToolbarBack() {
+        this.finish();
+    }
+
+    protected void onToolbarBackText() {
+
+    }
+
 }

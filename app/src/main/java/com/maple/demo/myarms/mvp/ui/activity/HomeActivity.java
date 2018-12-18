@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseViewActivity;
+import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerHomeComponent;
 import com.maple.demo.myarms.di.module.HomeModule;
 import com.maple.demo.myarms.mvp.contract.HomeContract;
@@ -17,7 +19,7 @@ import com.maple.demo.myarms.mvp.presenter.HomePresenter;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class HomeActivity extends BaseViewActivity<HomePresenter> implements HomeContract.View {
+public class HomeActivity extends BaseViewActivity<HomePresenter> implements HomeContract.View, ToolbarConfig.OnToolbarLitener {
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -64,5 +66,13 @@ public class HomeActivity extends BaseViewActivity<HomePresenter> implements Hom
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    protected ToolbarConfig getToolbarConfig() {
+        return ToolbarConfig.builder()
+                .setTitle("首页")
+                .setToolbarLitener(this)
+                .build();
     }
 }
