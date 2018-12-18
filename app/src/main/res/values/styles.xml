@@ -9,6 +9,15 @@
     </style>
     <style name="AppTheme.NoTitleBar" >
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoTitleBar.Splash" >
+        <item name="android:windowBackground">@drawable/shape_splash</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="AppTheme.NoTitleBar.Welcome" >
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

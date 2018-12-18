@@ -68,6 +68,7 @@ public class HomeActivity extends BaseViewActivity<HomePresenter> implements Hom
         finish();
     }
 
+
     @Override
     protected ToolbarConfig getToolbarConfig() {
         return ToolbarConfig.builder()

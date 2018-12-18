@@ -66,4 +66,5 @@ dependencies {
     implementation rootProject.ext.dependencies["mvp-arms"]
     //--app
     implementation rootProject.ext.dependencies["multiple-status-view"]
+    implementation rootProject.ext.dependencies["utilcode"]
 }

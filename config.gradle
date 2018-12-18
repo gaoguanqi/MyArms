@@ -113,6 +113,8 @@ ext {
             "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
             "multiple-status-view"          : "com.classic.common:multiple-status-view:1.5.1",
             "immersionbar"          : "com.gyf.immersionbar:immersionbar:2.3.3-beta09",
+            //app
+            "utilcode"          : "com.blankj:utilcode:1.22.3",
             //-------------------------//
             "mvp-arms"              : "me.jessyan:arms:2.5.0",
 

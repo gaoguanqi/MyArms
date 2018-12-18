@@ -25,4 +25,14 @@ public class SplashActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         startActivity(new Intent(this, HomeActivity.class));
     }
+
+    @Override
+    public boolean useToolBar() {
+        return false;
+    }
+
+    @Override
+    public boolean useImmersionBar() {
+        return false;
+    }
 }

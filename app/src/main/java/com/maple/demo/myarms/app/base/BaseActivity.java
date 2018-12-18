@@ -52,7 +52,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
-    private Unbinder mUnbinder;
+    protected Unbinder mUnbinder;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
@@ -92,7 +92,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         initData(savedInstanceState);
     }
 
-    private void setContentView(@Nullable Bundle savedInstanceState) {
+    protected void setContentView(@Nullable Bundle savedInstanceState) {
         int layoutResID = initView(savedInstanceState);
         //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
         if (layoutResID != 0) {
@@ -171,11 +171,13 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     protected void initImmersionBar() {
         mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarColor(R.color.color_status);
+        mImmersionBar.fitsSystemWindows(true);
         //设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度
         mImmersionBar.init();
     }
 
-    private void initToolbar() {
+    public void initToolbar() {
         View toolbar = findViewById(R.id.toolbar);
         if (toolbar == null) {
             return;

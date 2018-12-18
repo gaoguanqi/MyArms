@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--启动页主题-->
+    <style name="AppTheme.NoTitleBar.Splash" >
+        <item name="android:windowBackground">@drawable/shape_splash</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/trans</item>
+        <item name="android:navigationBarColor">@color/trans</item>
+    </style>
+</resources>
