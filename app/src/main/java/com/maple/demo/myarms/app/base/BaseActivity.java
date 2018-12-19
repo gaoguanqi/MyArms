@@ -199,7 +199,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * 是否注册网络状态广播
      * @return
      */
-    protected boolean useNetReceiver() { return true; }
+    protected boolean useNetReceiver() { return false; }
 
 
     @Override

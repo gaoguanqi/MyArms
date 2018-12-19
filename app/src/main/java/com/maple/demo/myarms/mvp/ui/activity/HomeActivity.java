@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.jess.arms.di.component.AppComponent;
@@ -21,7 +22,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 public class HomeActivity extends BaseViewActivity<HomePresenter> implements HomeContract.View, ToolbarConfig.OnToolbarLitener {
-
+    private long lastBackPressedMillis;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerHomeComponent //如找不到该类,请编译一下项目
@@ -73,8 +74,30 @@ public class HomeActivity extends BaseViewActivity<HomePresenter> implements Hom
     @Override
     protected ToolbarConfig getToolbarConfig() {
         return ToolbarConfig.builder()
+                .setHasBack(false)
                 .setTitle("首页")
                 .setToolbarLitener(this)
                 .build();
+    }
+
+    @Override
+    protected boolean useNetReceiver() {
+        return true;
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (lastBackPressedMillis + 2000 > System.currentTimeMillis()) {
+                //moveTaskToBack(true);
+                killMyself();
+            } else {
+                lastBackPressedMillis = System.currentTimeMillis();
+                showMessage(getString(R.string.app_exit));
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

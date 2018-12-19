@@ -14,6 +14,8 @@
     <string name="response_return_error">服务器返回数据失败</string>
     <string name="loading">请稍候…</string>
 
+    <string name="app_exit">再按一次退出程序</string>
+
     <!--titleBar-->
     <string name="text_title_back">返回</string>
     <string name="text_title_setting">设置</string>

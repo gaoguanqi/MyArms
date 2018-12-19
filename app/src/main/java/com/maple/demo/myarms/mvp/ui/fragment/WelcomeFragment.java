@@ -18,6 +18,7 @@ import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseFragment;
 import com.maple.demo.myarms.app.config.AppContent;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
+import com.maple.demo.myarms.mvp.ui.activity.WelcomeActivity;
 
 /**
  * author: gaogq
@@ -70,6 +71,7 @@ public class WelcomeFragment extends BaseFragment implements View.OnClickListene
             case R.id.btn_action:
                 SPUtils.getInstance().put(AppContent.SaveInfoKey.HASWECLOME,true);
                 startActivity(new Intent(getActivity(), HomeActivity.class));
+                ((WelcomeActivity)getActivity()).killMyself();
                 break;
              default:
         }
