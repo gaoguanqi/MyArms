@@ -11,11 +11,11 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
-import com.maple.demo.myarms.mvp.contract.WeclomeContract;
+import com.maple.demo.myarms.mvp.contract.WelcomeContract;
 
 
 @ActivityScope
-public class WeclomePresenter extends BasePresenter<WeclomeContract.Model, WeclomeContract.View> {
+public class WelcomePresenter extends BasePresenter<WelcomeContract.Model, WelcomeContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -26,7 +26,7 @@ public class WeclomePresenter extends BasePresenter<WeclomeContract.Model, Weclo
     AppManager mAppManager;
 
     @Inject
-    public WeclomePresenter(WeclomeContract.Model model, WeclomeContract.View rootView) {
+    public WelcomePresenter(WelcomeContract.Model model, WelcomeContract.View rootView) {
         super(model, rootView);
     }
 

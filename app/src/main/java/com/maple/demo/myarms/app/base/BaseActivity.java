@@ -55,6 +55,12 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
+
+/**
+ * author: gaogq
+ * time: 2018/12/17 13:13
+ * description: 封装了沉浸式状态栏，网络状态监听广播
+ */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable,ToolbarConfig.OnToolbarLitener, OnNetStateCallback {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
@@ -189,6 +195,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     protected boolean usePortrait() { return true; }
 
+    /**
+     * 是否注册网络状态广播
+     * @return
+     */
     protected boolean useNetReceiver() { return true; }
 
 

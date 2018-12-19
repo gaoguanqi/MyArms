@@ -14,6 +14,7 @@ import com.maple.demo.myarms.di.component.DaggerSplashComponent;
 import com.maple.demo.myarms.di.module.SplashModule;
 import com.maple.demo.myarms.mvp.contract.SplashContract;
 import com.maple.demo.myarms.mvp.presenter.SplashPresenter;
+import com.maple.demo.myarms.utils.ToastUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
@@ -58,7 +59,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        ArmsUtils.snackbarText(message);
+        ToastUtil.showToast(message);
     }
 
     @Override

@@ -2,32 +2,34 @@ package com.maple.demo.myarms.mvp.presenter;
 
 import android.app.Application;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.Gravity;
-import android.widget.Button;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.Utils;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.utils.ArmsUtils;
+import com.jess.arms.utils.RxLifecycleUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.config.AppContent;
 import com.maple.demo.myarms.mvp.contract.SplashContract;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
-import com.maple.demo.myarms.mvp.ui.activity.WeclomeActivity;
+import com.maple.demo.myarms.mvp.ui.activity.WelcomeActivity;
 import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.utils.PermissionUtil;
 import com.maple.demo.myarms.widget.dialog.CustomDialog;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 
 @ActivityScope
@@ -110,13 +112,22 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
     }
 
     private void launchTarget() {
-        Intent intent;
-        if(SPUtils.getInstance().getBoolean(AppContent.SaveInfoKey.HASWECLOME)){
-            intent = new Intent(mRootView.getActivity(), HomeActivity.class);
-        }else{
-            intent = new Intent(mRootView.getActivity(), WeclomeActivity.class);
-        }
-        mRootView.launchActivity(intent);
-        mRootView.killMyself();
+        Observable.timer(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<Long>(mErrorHandler) {
+                    @Override
+                    public void onNext(Long aLong) {
+                        Intent intent;
+                        if(SPUtils.getInstance().getBoolean(AppContent.SaveInfoKey.HASWECLOME)){
+                            intent = new Intent(mRootView.getActivity(), HomeActivity.class);
+                        }else{
+                            intent = new Intent(mRootView.getActivity(), WelcomeActivity.class);
+                        }
+                        mRootView.launchActivity(intent);
+                        mRootView.killMyself();
+                    }
+                });
     }
 }

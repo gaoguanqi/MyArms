@@ -10,13 +10,14 @@ import com.classic.common.MultipleStatusView;
 import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
+import com.maple.demo.myarms.utils.ToastUtil;
 
 import butterknife.ButterKnife;
 
 /**
  * author: gaogq
  * time: 2018/12/17 13:13
- * description:
+ * description: 封装了多状态视图
  */
 public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivity<T> implements View.OnClickListener {
     protected MultipleStatusView mMultipleStatusView;
@@ -25,10 +26,9 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
         int layoutResID = initView(savedInstanceState);
         //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
         if (layoutResID != 0) {
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             setContentView(R.layout.layout_base);
             mMultipleStatusView =  (MultipleStatusView)findViewById(R.id.multiple_status_view);
-            mMultipleStatusView.showContent(layoutResID,layoutParams);
+            mMultipleStatusView.showContent(layoutResID,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             //设置重试视图点击事件
             mMultipleStatusView.setOnRetryClickListener(this);
             //绑定到butterknife
@@ -67,6 +67,6 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
     }
 
     private void onClickRetry() {
-        ArmsUtils.snackbarText("刷新数据");
+        ToastUtil.showToast("刷新数据");
     }
 }

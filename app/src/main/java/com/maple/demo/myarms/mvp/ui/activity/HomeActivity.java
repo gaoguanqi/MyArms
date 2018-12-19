@@ -15,6 +15,7 @@ import com.maple.demo.myarms.di.component.DaggerHomeComponent;
 import com.maple.demo.myarms.di.module.HomeModule;
 import com.maple.demo.myarms.mvp.contract.HomeContract;
 import com.maple.demo.myarms.mvp.presenter.HomePresenter;
+import com.maple.demo.myarms.utils.ToastUtil;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -54,7 +55,7 @@ public class HomeActivity extends BaseViewActivity<HomePresenter> implements Hom
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        ArmsUtils.snackbarText(message);
+        ToastUtil.showToast(message);
     }
 
     @Override

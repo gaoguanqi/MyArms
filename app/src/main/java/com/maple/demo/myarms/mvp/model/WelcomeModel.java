@@ -10,18 +10,18 @@ import com.jess.arms.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
-import com.maple.demo.myarms.mvp.contract.WeclomeContract;
+import com.maple.demo.myarms.mvp.contract.WelcomeContract;
 
 
 @ActivityScope
-public class WeclomeModel extends BaseModel implements WeclomeContract.Model {
+public class WelcomeModel extends BaseModel implements WelcomeContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public WeclomeModel(IRepositoryManager repositoryManager) {
+    public WelcomeModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 
