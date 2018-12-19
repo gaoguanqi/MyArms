@@ -2,6 +2,7 @@ package com.maple.demo.myarms.mvp.presenter;
 
 import android.app.Application;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
@@ -11,7 +12,9 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
+import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.mvp.contract.HomeContract;
+import com.xuexiang.xupdate.XUpdate;
 
 
 @ActivityScope
@@ -37,5 +40,13 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+
+    public void update() {
+        String url = "https://raw.githubusercontent.com/xuexiangjys/XUpdate/master/jsonapi/update_test.json";
+        XUpdate.newBuild(mRootView.getActivity())
+                .updateUrl(url)
+                .update();
     }
 }

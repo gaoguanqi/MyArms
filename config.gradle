@@ -5,8 +5,8 @@ ext {
             buildToolsVersion       : "28.0.3",
             minSdkVersion           : 17,
             targetSdkVersion        : 28,
-            versionCode             : 1,
-            versionName             : "1.0"
+            versionCode             : 100,
+            versionName             : "1.0.0"
     ]
 
     version = [
@@ -116,6 +116,8 @@ ext {
             //app
             "utilcode"          : "com.blankj:utilcode:1.22.3",
             "cookiebar2"          : "org.aviran.cookiebar2:cookiebar2:1.1.0",
+            "XUpdate"          : "com.github.xuexiangjys:XUpdate:1.0.6",
+            "okhttp-utils"          : "com.qianwen:okhttp-utils:3.8.0",
             //-------------------------//
             "mvp-arms"              : "me.jessyan:arms:2.5.0",
 

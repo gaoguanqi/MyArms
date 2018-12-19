@@ -70,4 +70,6 @@ dependencies {
     implementation rootProject.ext.dependencies["multiple-status-view"]
     implementation rootProject.ext.dependencies["utilcode"]
     implementation rootProject.ext.dependencies["cookiebar2"]
+    implementation rootProject.ext.dependencies["XUpdate"]
+    implementation rootProject.ext.dependencies["okhttp-utils"]
 }

@@ -8,8 +8,13 @@ import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.BuildConfig;
 import com.maple.demo.myarms.utils.LogUtils;
+import com.maple.demo.myarms.utils.ToastUtil;
+import com.maple.demo.myarms.widget.update.OKHttpUpdateHttpService;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.xuexiang.xupdate.XUpdate;
+import com.xuexiang.xupdate.entity.UpdateError;
+import com.xuexiang.xupdate.listener.OnUpdateFailureListener;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -60,6 +65,25 @@ public class AppLifecyclesImpl implements AppLifecycles {
                 BuildConfig.DEBUG ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
         initUtils(application);
+        initUpdate(application);
+    }
+
+    private void initUpdate(Application application) {
+        XUpdate.get()
+                .debug(true) //开启debug模式，可用于问题的排查
+                .isWifiOnly(true)     //默认设置只在wifi下检查版本更新
+                .isGet(true)          //默认设置使用get请求检查版本
+                .isAutoMode(false)    //默认设置非自动模式，可根据具体使用配置
+//                .param("VersionCode", UpdateUtils.getVersionCode(application)) //设置默认公共请求参数
+//                .param("AppKey", getPackageName())
+                .setOnUpdateFailureListener(new OnUpdateFailureListener() { //设置版本更新出错的监听
+                    @Override
+                    public void onFailure(UpdateError error) {
+                        ToastUtil.showToast(error.toString());
+                    }
+                })
+                .setIUpdateHttpService(new OKHttpUpdateHttpService()) //这个必须设置！实现网络请求功能。
+                .init(application);   //这个必须初始化
     }
 
     private void initUtils(Application application) {
