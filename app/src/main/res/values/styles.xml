@@ -20,4 +20,25 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+
+    <!--弹窗的样式-->
+    <style name="BaseDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/shape_dialog_bg</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="dialog_center_anim" >
+        <item name="android:windowEnterAnimation">@anim/modal_in</item>
+        <item name="android:windowExitAnimation">@anim/modal_out</item>
+    </style>
+
+    <style name="dialog_bottom_anim" >
+        <item name="android:windowEnterAnimation">@anim/bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_out</item>
+    </style>
 </resources>

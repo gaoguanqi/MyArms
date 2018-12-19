@@ -69,4 +69,5 @@ dependencies {
     //--app
     implementation rootProject.ext.dependencies["multiple-status-view"]
     implementation rootProject.ext.dependencies["utilcode"]
+    implementation rootProject.ext.dependencies["cookiebar2"]
 }

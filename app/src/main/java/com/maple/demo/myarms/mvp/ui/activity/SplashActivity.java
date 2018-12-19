@@ -6,20 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
+import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseActivity;
-import com.maple.demo.myarms.app.config.AppContent;
 import com.maple.demo.myarms.di.component.DaggerSplashComponent;
 import com.maple.demo.myarms.di.module.SplashModule;
 import com.maple.demo.myarms.mvp.contract.SplashContract;
 import com.maple.demo.myarms.mvp.presenter.SplashPresenter;
-
-import com.maple.demo.myarms.R;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
 
 import javax.inject.Inject;
 
@@ -48,7 +43,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.applyPermissions();
     }
 
     @Override
@@ -96,5 +90,12 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     public RxPermissions getRxPermissions() {
         return mRxPermissions;
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.applyPermissions();
     }
 }

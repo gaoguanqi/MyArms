@@ -2,18 +2,20 @@ package com.maple.demo.myarms.app.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.InflateException;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.base.delegate.IActivity;
@@ -23,8 +25,12 @@ import com.jess.arms.integration.lifecycle.ActivityLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
+import com.maple.demo.myarms.app.manager.callback.OnNetStateCallback;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
+import com.maple.demo.myarms.app.receiver.NetBroadcastReceiver;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+
+import org.aviran.cookiebar2.CookieBar;
 
 import javax.inject.Inject;
 
@@ -49,7 +55,7 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable,ToolbarConfig.OnToolbarLitener {
+public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityLifecycleable,ToolbarConfig.OnToolbarLitener, OnNetStateCallback {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
@@ -59,6 +65,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
 
     protected ImmersionBar mImmersionBar;
+    private NetBroadcastReceiver mNetBroadcastReceiver;
 
     @NonNull
     @Override
@@ -122,6 +129,11 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             mImmersionBar.destroy();
         }
 
+        //注销广播
+        if (mNetBroadcastReceiver != null) {
+            unregisterReceiver(mNetBroadcastReceiver);
+        }
+
         if (mUnbinder != null && mUnbinder != Unbinder.EMPTY){
             mUnbinder.unbind();
             this.mUnbinder = null;
@@ -176,6 +188,33 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * @return
      */
     protected boolean usePortrait() { return true; }
+
+    protected boolean useNetReceiver() { return true; }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(useNetReceiver()){
+            //注册网络状态监听的广播
+            registerBroadcastReceiver();
+        }
+    }
+
+    /**
+     * 注册网络状态广播
+     */
+    private void registerBroadcastReceiver() {
+        //注册广播
+        if (mNetBroadcastReceiver == null) {
+            mNetBroadcastReceiver = new NetBroadcastReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(mNetBroadcastReceiver, filter);
+            //设置监听
+            mNetBroadcastReceiver.setNetStateCallback(this);
+        }
+    }
 
     /**
      * 初始化沉浸式状态栏
@@ -287,4 +326,14 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     }
 
+    @Override
+    public void onNetState(NetworkUtils.NetworkType type) {
+        //ArmsUtils.snackbarText("网络监听："+type);
+        CookieBar.build(this)
+                .setTitle("您正在使用")
+                .setBackgroundColor(R.color.color_toolbar)
+                .setMessage(type.toString())
+                .setCookiePosition(CookieBar.TOP)  // Cookie will be displayed at the bottom
+                .show();
+    }
 }
