@@ -23,7 +23,7 @@ import com.maple.demo.myarms.utils.ToastUtil;
  * description: 主要功能是封装多状态布局的fragment
  *              如果即需要多状态布局又需要懒加载的fragment，请使用{@link BaseLazyFragment}
  */
-public abstract class BaseViewFragment<P extends IPresenter> extends BaseFragment<P> implements View.OnClickListener {
+public abstract class BaseViewFragment<P extends IPresenter> extends BaseFragment<P> implements ToolbarConfig.OnToolbarLitener,View.OnClickListener {
     protected MultipleStatusView mMultipleStatusView;
     /**
      * 沉浸式以及bar的管理
@@ -139,6 +139,42 @@ public abstract class BaseViewFragment<P extends IPresenter> extends BaseFragmen
             default:
         }
     }
+
+    @Override
+    public void onToolbarClick(int id) {
+        switch (id){
+            case R.id.tv_bar_back:
+                onToolbarBackText();
+                break;
+            case R.id.ibtn_bar_back:
+                onToolbarBack();
+                break;
+            case R.id.tv_bar_setting:
+                onToolbarSettingText();
+                break;
+            case R.id.ibtn_bar_setting:
+                onToolbarSetting();
+                break;
+            default:
+        }
+    }
+
+    protected void onToolbarSetting() {
+
+    }
+
+    protected void onToolbarSettingText() {
+
+    }
+
+    protected void onToolbarBack() {
+        getActivity().finish();
+    }
+
+    protected void onToolbarBackText() {
+
+    }
+
 
     protected boolean isSafeMultipleStatusView(){
         return mMultipleStatusView != null ? true:false;

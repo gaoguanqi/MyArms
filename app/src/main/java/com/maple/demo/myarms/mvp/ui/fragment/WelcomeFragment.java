@@ -33,7 +33,7 @@ public class WelcomeFragment extends BaseFragment implements View.OnClickListene
         this.page = page;
     }
 
-    public static BaseFragment getInstance(int page) {
+    public static BaseFragment newInstance(int page) {
         return new WelcomeFragment(page);
     }
 

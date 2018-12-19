@@ -66,6 +66,12 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData(savedInstanceState);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null){ mPresenter.onDestroy();}//释放资源
@@ -91,5 +97,5 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     public boolean useEventBus() {
         return true;
     }
-    
+
 }

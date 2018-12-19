@@ -57,9 +57,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter> implements W
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(WelcomeFragment.getInstance(1));
-        mFragmentList.add(WelcomeFragment.getInstance(2));
-        mFragmentList.add(WelcomeFragment.getInstance(3));
+        mFragmentList.add(WelcomeFragment.newInstance(1));
+        mFragmentList.add(WelcomeFragment.newInstance(2));
+        mFragmentList.add(WelcomeFragment.newInstance(3));
         mPagerAdapter = new WelcomePagerAdapter(getSupportFragmentManager(),mFragmentList);
         vp.setAdapter(mPagerAdapter);
     }
