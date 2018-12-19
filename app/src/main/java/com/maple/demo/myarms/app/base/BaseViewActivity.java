@@ -40,10 +40,10 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
                     initToolbar();
                 }
             }
-            mMultipleStatusView.showLoading();
             if(useImmersionBar()){
                 initImmersionBar();
             }
+            mMultipleStatusView.showLoading();
         }
     }
 

@@ -36,6 +36,17 @@ public abstract class BaseLazyFragment<P extends IPresenter> extends BaseViewFra
         super.onViewCreated(view, savedInstanceState);
         if (isLazyLoad()) {
             mIsPrepare = true;
+        }else {
+            if (useImmersionBar()){
+                initImmersionBar();
+            }
+        }
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        if (mIsVisible && useImmersionBar()) {
+            initImmersionBar();
         }
     }
 
@@ -45,6 +56,9 @@ public abstract class BaseLazyFragment<P extends IPresenter> extends BaseViewFra
         if (getUserVisibleHint()) {
             mIsVisible = true;
             onVisible();
+            if (mIsPrepare && mIsVisible && useImmersionBar()) {
+                initImmersionBar();
+            }
             if (mIsPrepare && mIsVisible && !mHasLoadedView) {
                 mHasLoadedView = true;
                 lazyLoadView();
@@ -91,5 +105,14 @@ public abstract class BaseLazyFragment<P extends IPresenter> extends BaseViewFra
      */
     protected void onVisible() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mImmersionBar != null) {
+            mImmersionBar.destroy();
+            this.mImmersionBar = null;
+        };
     }
 }

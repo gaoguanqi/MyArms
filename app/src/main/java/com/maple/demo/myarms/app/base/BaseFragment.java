@@ -91,4 +91,5 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     public boolean useEventBus() {
         return true;
     }
+    
 }

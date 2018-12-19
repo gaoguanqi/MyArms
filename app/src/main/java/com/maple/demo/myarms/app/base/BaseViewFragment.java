@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.classic.common.MultipleStatusView;
+import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.mvp.IPresenter;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
@@ -24,6 +25,10 @@ import com.maple.demo.myarms.utils.ToastUtil;
  */
 public abstract class BaseViewFragment<P extends IPresenter> extends BaseFragment<P> implements View.OnClickListener {
     protected MultipleStatusView mMultipleStatusView;
+    /**
+     * 沉浸式以及bar的管理
+     */
+    protected ImmersionBar mImmersionBar;
 
     @Nullable
     @Override
@@ -42,6 +47,9 @@ public abstract class BaseViewFragment<P extends IPresenter> extends BaseFragmen
                     viewStubTitle.inflate();
                     initToolbar(rootView);
                 }
+            }
+            if(useImmersionBar()){
+                initImmersionBar();
             }
             mMultipleStatusView.showLoading();
         }
@@ -97,9 +105,27 @@ public abstract class BaseViewFragment<P extends IPresenter> extends BaseFragmen
      */
     protected boolean useToolBar() { return false; }
 
+    /**
+     * 是否使用ImmersionBar
+     * @return
+     */
+    protected boolean useImmersionBar() { return false; }
+
     protected ToolbarConfig getToolbarConfig(){
         return null;
     }
+
+    /**
+     * 初始化沉浸式状态栏
+     */
+    protected void initImmersionBar() {
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarColor(R.color.color_status);
+        mImmersionBar.fitsSystemWindows(true);
+        //设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度
+        mImmersionBar.init();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
