@@ -39,10 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.WelcomeActivity"
+        <activity
+            android:name=".mvp.ui.activity.WelcomeActivity"
             android:theme="@style/AppTheme.NoTitleBar.Welcome" />
         <activity android:name=".mvp.ui.activity.HomeActivity" />
-
+        <activity android:name=".mvp.ui.activity.SlideActivity"
+            android:theme="@style/AppTheme.NoTitleBar.Slide" />
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.maple.demo.myarms.app.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.res.Configuration;

@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
@@ -123,6 +125,7 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
         return true;
     }
 
+
     @Override
     protected ToolbarConfig getToolbarConfig() {
                 return ToolbarConfig.builder()
@@ -139,6 +142,11 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
 
     @Override
     protected void onToolbarBack() {
-        ToastUtil.showToast("back");
+        ((HomeActivity)getActivity()).openDrawer();
+    }
+
+    @Override
+    protected void onToolbarSetting() {
+        ((HomeActivity)getActivity()).openSlide();
     }
 }

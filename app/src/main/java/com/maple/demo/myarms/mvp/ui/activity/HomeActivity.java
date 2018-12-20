@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -16,17 +18,14 @@ import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseActivity;
 import com.maple.demo.myarms.app.base.BaseFragment;
-import com.maple.demo.myarms.app.base.BaseViewActivity;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerHomeComponent;
 import com.maple.demo.myarms.di.module.HomeModule;
 import com.maple.demo.myarms.mvp.contract.HomeContract;
 import com.maple.demo.myarms.mvp.presenter.HomePresenter;
 import com.maple.demo.myarms.mvp.ui.adapter.HomePagerAdapter;
-import com.maple.demo.myarms.mvp.ui.adapter.WelcomePagerAdapter;
 import com.maple.demo.myarms.mvp.ui.fragment.MainFragment;
 import com.maple.demo.myarms.mvp.ui.fragment.MineFragment;
-import com.maple.demo.myarms.mvp.ui.fragment.WelcomeFragment;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.maple.demo.myarms.widget.SwitchSlideViewPager;
 
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -54,6 +52,10 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     RadioButton rbtnMine;
     @BindView(R.id.radioGroup)
     RadioGroup radioGroup;
+    @BindView(R.id.drawer)
+    DrawerLayout drawer;
+    @BindView(R.id.layout_menu)
+    LinearLayout layoutMenu;
 
     private List<BaseFragment> fragments;
 
@@ -99,6 +101,8 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        //禁止手势滑动
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mPresenter.update();
         viewPager.addOnPageChangeListener(pageChangeListener);
         fragments = new ArrayList<>();
@@ -194,5 +198,15 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public boolean useFragment() {
         return true;
+    }
+
+    public void openDrawer(){
+        if(!drawer.isDrawerOpen(layoutMenu)){
+            drawer.openDrawer(layoutMenu);
+        }
+    }
+
+    public void openSlide(){
+        launchActivity(new Intent(this,SlideActivity.class));
     }
 }

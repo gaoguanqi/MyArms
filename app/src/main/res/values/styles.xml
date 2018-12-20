@@ -7,16 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="AppTheme.NoTitleBar" >
+
+    <style name="AppTheme.NoTitleBar">
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.NoTitleBar.Splash" >
+    <style name="AppTheme.NoTitleBar.Splash">
         <item name="android:windowBackground">@drawable/shape_splash</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="AppTheme.NoTitleBar.Welcome" >
+    <style name="AppTheme.NoTitleBar.Welcome">
         <item name="android:windowFullscreen">true</item>
     </style>
 
@@ -39,13 +40,25 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="dialog_center_anim" >
+    <style name="dialog_center_anim">
         <item name="android:windowEnterAnimation">@anim/modal_in</item>
         <item name="android:windowExitAnimation">@anim/modal_out</item>
     </style>
 
-    <style name="dialog_bottom_anim" >
+    <style name="dialog_bottom_anim">
         <item name="android:windowEnterAnimation">@anim/bottom_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_out</item>
     </style>
+
+    <style name="anim_slide" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/out_right</item>
+    </style>
+
+    <style name="AppTheme.NoTitleBar.Slide">
+        <item name="android:windowAnimationStyle">@style/anim_slide</item>
+    </style>
+
 </resources>
