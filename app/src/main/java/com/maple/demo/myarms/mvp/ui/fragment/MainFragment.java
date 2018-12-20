@@ -126,13 +126,19 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
     @Override
     protected ToolbarConfig getToolbarConfig() {
                 return ToolbarConfig.builder()
-                .setHasBack(false)
+                .setHasBack(true)
                 .setTitle("首页")
+                 .setHasSetting(true)
                 .setToolbarLitener(this)
                 .build();
     }
 
     private void setupData() {
         hideLoading();
+    }
+
+    @Override
+    protected void onToolbarBack() {
+        ToastUtil.showToast("back");
     }
 }
