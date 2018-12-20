@@ -14,5 +14,5 @@
     <color name="color_background">#EDEDED</color>
     <color name="color_drawer">#F6F6F6</color>
     <color name="view_line">#E5E5E5</color>
-
+    <color name="indicator_unselected_color">#55FFFFFF</color>
 </resources>
