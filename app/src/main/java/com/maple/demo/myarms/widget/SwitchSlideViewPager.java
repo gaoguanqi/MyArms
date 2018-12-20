@@ -28,6 +28,15 @@ public class SwitchSlideViewPager extends ViewPager {
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (noScroll){
+            return false;
+        }else{
+            return super.onInterceptTouchEvent(ev);
+        }
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (noScroll){
             return false;

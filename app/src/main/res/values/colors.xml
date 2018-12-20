@@ -12,6 +12,7 @@
     <color name="color_title">#FFFFFF</color>
 
     <color name="color_background">#EDEDED</color>
+    <color name="color_drawer">#F6F6F6</color>
     <color name="view_line">#E5E5E5</color>
 
 </resources>
