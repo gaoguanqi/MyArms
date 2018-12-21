@@ -43,14 +43,25 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
             if(useImmersionBar()){
                 initImmersionBar();
             }
-            mMultipleStatusView.showLoading();
+
+            if(useMultipleStatusView()){
+                mMultipleStatusView.showLoading();
+            }else{
+                mMultipleStatusView.showContent();
+            }
         }
     }
 
 
+    protected boolean useMultipleStatusView(){
+        return true;
+    }
+
     protected boolean isSafeMultipleStatusView(){
         return mMultipleStatusView != null ? true:false;
     }
+
+
 
     @Override
     public void onClick(View v) {

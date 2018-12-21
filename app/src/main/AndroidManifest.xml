@@ -43,8 +43,11 @@
             android:name=".mvp.ui.activity.WelcomeActivity"
             android:theme="@style/AppTheme.NoTitleBar.Welcome" />
         <activity android:name=".mvp.ui.activity.HomeActivity" />
-        <activity android:name=".mvp.ui.activity.SlideActivity"
+        <activity
+            android:name=".mvp.ui.activity.SlideActivity"
             android:theme="@style/AppTheme.NoTitleBar.Slide" />
+        <activity android:name=".mvp.ui.activity.RegisteActivity" />
+        <activity android:name=".mvp.ui.activity.LoginActivity"/>
     </application>
 
 </manifest>

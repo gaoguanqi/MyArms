@@ -18,6 +18,8 @@ import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseActivity;
 import com.maple.demo.myarms.app.base.BaseFragment;
+import com.maple.demo.myarms.app.db.UserDao;
+import com.maple.demo.myarms.app.global.AppController;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerHomeComponent;
 import com.maple.demo.myarms.di.module.HomeModule;
@@ -87,8 +89,13 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
                     rbtnMine.setChecked(false);
                     break;
                 case TAB_MINE:
-                    rbtnMine.setChecked(true);
-                    rbtnHome.setChecked(false);
+                    if(UserDao.getInstance().isLogin()){
+                        viewPager.setCurrentItem(TAB_MINE, false);
+                    }else{
+                        rbtnHome.setChecked(true);
+                        rbtnMine.setChecked(false);
+                        launchActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                    }
                     break;
                 default:
             }
@@ -103,7 +110,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     public void initData(@Nullable Bundle savedInstanceState) {
         //禁止手势滑动
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mPresenter.update();
         viewPager.addOnPageChangeListener(pageChangeListener);
         fragments = new ArrayList<>();
         fragments.add(MainFragment.newInstance());
@@ -111,7 +117,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setCurrentItem(TAB_HOME);
-
+        mPresenter.update();
     }
 
     @Override
@@ -157,14 +163,26 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         return true;
     }
 
-    @OnClick({R.id.rbtn_home, R.id.rbtn_mine})
+    @OnClick({R.id.rbtn_home, R.id.rbtn_mine,R.id.btn_logout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rbtn_home:
                 viewPager.setCurrentItem(TAB_HOME, false);
                 break;
             case R.id.rbtn_mine:
-                viewPager.setCurrentItem(TAB_MINE, false);
+                if(UserDao.getInstance().isLogin()){
+                    viewPager.setCurrentItem(TAB_MINE, false);
+                }else{
+                    rbtnHome.setChecked(true);
+                    rbtnMine.setChecked(false);
+                    launchActivity(new Intent(this,LoginActivity.class));
+                }
+                break;
+            case R.id.btn_logout:
+                UserDao.getInstance().deleteAllData(this);
+                if(drawer.isDrawerOpen(layoutMenu)){
+                    drawer.closeDrawer(layoutMenu);
+                }
                 break;
              default:
         }

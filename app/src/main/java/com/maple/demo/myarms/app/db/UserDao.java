@@ -158,4 +158,13 @@ public class UserDao {
     }
 
 
+    /**
+     * 是否登录
+     *
+     * @return isLogin
+     */
+    public boolean isLogin() {
+        return !getUserInfoDao().loadAll().isEmpty();
+    }
+
 }

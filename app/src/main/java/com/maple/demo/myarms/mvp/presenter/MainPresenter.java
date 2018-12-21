@@ -128,24 +128,19 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     }
 
     public void refreshData() {
-        int random =(int)(Math.random()*10);
         mBannerData.clear();
-        if(random > 5){
-            mBannerEntity = new BannerEntity();
-            mBannerEntity.setUrl("https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=4f7bf38ac3fc1e17fdbf8b3772ab913e/d4628535e5dde7119c3d076aabefce1b9c1661ba.jpg");
-            mBannerEntity.setTitle("title1");
-            mBannerData.add(mBannerEntity);
-        }else if(random < 5){
-            mBannerEntity = new BannerEntity();
-            mBannerEntity.setUrl("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
-            mBannerEntity.setTitle("title3");
-            mBannerData.add(mBannerEntity);
-        }else{
-            mBannerEntity = new BannerEntity();
-            mBannerEntity.setUrl("https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/whfpf%3D268%2C152%2C50/sign=41cf35669425bc312b0852d838e2bf87/eaf81a4c510fd9f9bb10b5c1282dd42a2834a417.jpg");
-            mBannerEntity.setTitle("title2");
-            mBannerData.add(mBannerEntity);
-        }
+        mBannerEntity = new BannerEntity();
+        mBannerEntity.setUrl("https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=4f7bf38ac3fc1e17fdbf8b3772ab913e/d4628535e5dde7119c3d076aabefce1b9c1661ba.jpg");
+        mBannerEntity.setTitle("title1");
+        mBannerData.add(mBannerEntity);
+        mBannerEntity = new BannerEntity();
+        mBannerEntity.setUrl("https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/whfpf%3D268%2C152%2C50/sign=41cf35669425bc312b0852d838e2bf87/eaf81a4c510fd9f9bb10b5c1282dd42a2834a417.jpg");
+        mBannerEntity.setTitle("title2");
+        mBannerData.add(mBannerEntity);
+        mBannerEntity = new BannerEntity();
+        mBannerEntity.setUrl("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
+        mBannerEntity.setTitle("title3");
+        mBannerData.add(mBannerEntity);
 
         // menu
         mMenuData.clear();
