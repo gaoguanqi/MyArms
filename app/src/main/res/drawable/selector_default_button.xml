@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--按下时-->
+    <item android:drawable="@drawable/shape_button_pressed"  android:state_pressed="true"/>
+    <!--失去焦点时-->
+    <item android:drawable="@drawable/shape_button_enable"  android:state_focused="true"/>
+    <!--默认时-->
+    <item android:drawable="@drawable/shape_button_normal"/>
+</selector>

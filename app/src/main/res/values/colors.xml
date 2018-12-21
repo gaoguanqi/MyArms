@@ -15,4 +15,8 @@
     <color name="color_drawer">#F6F6F6</color>
     <color name="view_line">#E5E5E5</color>
     <color name="indicator_unselected_color">#55FFFFFF</color>
+
+    <color name="color_pressed">#AA1300</color>
+    <color name="color_normal">#FF5722</color>
+    <color name="color_enable">#E5E5E5</color>
 </resources>
