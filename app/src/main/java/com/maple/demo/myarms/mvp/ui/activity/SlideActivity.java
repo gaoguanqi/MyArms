@@ -2,6 +2,8 @@ package com.maple.demo.myarms.mvp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -16,10 +18,15 @@ import com.maple.demo.myarms.mvp.contract.SlideContract;
 import com.maple.demo.myarms.mvp.presenter.SlidePresenter;
 import com.maple.demo.myarms.utils.ToastUtil;
 
+import java.lang.ref.WeakReference;
+
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 public class SlideActivity extends BaseViewActivity<SlidePresenter> implements SlideContract.View {
+    private static final int WHAT_INIT_DATA = 0x0001;
+    private static final int WHAT_RETRY_DATA = 0x0010;
+    private MyHandler mHandler;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -39,6 +46,15 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+        mHandler = new MyHandler(this);
+        mHandler.sendEmptyMessageDelayed(WHAT_INIT_DATA,2000);
+    }
+
+
+    @Override
+    protected void onClickRetry() {
+        super.onClickRetry();
+        mHandler.sendEmptyMessage(WHAT_RETRY_DATA);
     }
 
     @Override
@@ -74,5 +90,34 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
                 .setTitle("侧滑")
                 .setToolbarLitener(this)
                 .build();
+    }
+
+
+    private static class MyHandler extends Handler{
+        final WeakReference<SlideActivity> weakReference;
+        public MyHandler(SlideActivity activity) {
+            this.weakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(weakReference.get() == null ){
+                return;
+            }
+            switch (msg.what){
+                case WHAT_INIT_DATA:
+                    if(weakReference.get().isSafeMultipleStatusView()){
+                        weakReference.get().mMultipleStatusView.showError();
+                    }
+                    break;
+                case WHAT_RETRY_DATA:
+                    if(weakReference.get().isSafeMultipleStatusView()){
+                        weakReference.get().mMultipleStatusView.showContent();
+                    }
+                    break;
+                default:
+            }
+        }
     }
 }

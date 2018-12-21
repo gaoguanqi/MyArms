@@ -66,7 +66,7 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
         }
     }
 
-    private void onClickRetry() {
+    protected void onClickRetry() {
         ToastUtil.showToast("刷新数据");
     }
 }
