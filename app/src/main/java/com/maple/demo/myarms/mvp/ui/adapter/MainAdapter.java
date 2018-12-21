@@ -13,6 +13,7 @@ import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.BannerHolder;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.ListHolder;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.MenuHolder;
+import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
 import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.widget.loadmore.LoadMoreHolder;
 
@@ -38,6 +39,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private LoadMoreHolder loadMoreHolder;
 
     private LayoutInflater mInflater;
+    private OnMainItemClickLitener mLitener;
+
+    public void setOnMainItemClickLitener(OnMainItemClickLitener litener){
+        this.mLitener = litener;
+    }
+
     public MainAdapter(Context context) {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -49,13 +56,13 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         LogUtils.logGGQ("-type:::"+viewType);
         if (viewType == TYPE_BANNER) {
-            return new BannerHolder(mInflater.inflate(R.layout.item_main_banner, parent, false));
+            return new BannerHolder(mInflater.inflate(R.layout.item_main_banner, parent, false),mLitener);
         } else if (viewType == TYPE_MENU) {
-            return new MenuHolder(mInflater.inflate(R.layout.item_main_menu, parent, false));
+            return new MenuHolder(mInflater.inflate(R.layout.item_main_menu, parent, false),mLitener);
         } else if(viewType == TYPE_LIST){
-            return new ListHolder(mInflater.inflate(R.layout.item_main_list, parent, false));
+            return new ListHolder(mInflater.inflate(R.layout.item_main_list, parent, false),mLitener);
         } else if(viewType == TYPE_LOAD_MORE){
-            loadMoreHolder = new LoadMoreHolder(mInflater.inflate(R.layout.item_load_more, parent, false));
+            loadMoreHolder = new LoadMoreHolder(mInflater.inflate(R.layout.item_load_more, parent, false),mLitener);
             return loadMoreHolder;
         }else{
             return null;

@@ -2,6 +2,7 @@ package com.maple.demo.myarms.mvp.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
+import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
+import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMenuItemClickLitener;
 
 import java.util.List;
 
@@ -37,9 +40,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
      */
     private ImageLoader mImageLoader;
 
+    private OnMenuItemClickLitener mLitener;
+
     public void setData(List<MenuEntity> data){
         this.mData = data;
         notifyDataSetChanged();
+    }
+
+    public void setOnMenuItemClickLitener(OnMenuItemClickLitener litener){
+        this.mLitener = litener;
     }
 
     public MenuAdapter(Context context) {
@@ -55,6 +64,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
     @Override
     public void onBindViewHolder(@NonNull MenuHolder holder, int position) {
         holder.setData(mData.get(position));
+        if(mLitener != null){
+            holder.root.setOnClickListener(v ->{
+                mLitener.onItemClickLitener(mData.get(position));
+            });
+        }
     }
 
     @Override
@@ -63,6 +77,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
     }
 
     public class MenuHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_menu)
+        ConstraintLayout root;
         @BindView(R.id.iv_icon)
         ImageView icon;
         @BindView(R.id.tv_text)

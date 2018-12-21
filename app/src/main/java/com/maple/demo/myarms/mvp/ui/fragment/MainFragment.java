@@ -7,13 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
@@ -28,20 +25,21 @@ import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.presenter.MainPresenter;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
 import com.maple.demo.myarms.mvp.ui.adapter.MainAdapter;
+import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.maple.demo.myarms.widget.loadmore.LoadMoreRecyclerView;
-import com.maple.demo.myarms.widget.loadmore.MyLoadingListItemCreator;
-import com.paginate.Paginate;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class MainFragment extends BaseLazyFragment<MainPresenter> implements MainContract.View {
+public class MainFragment extends BaseLazyFragment<MainPresenter> implements MainContract.View, OnMainItemClickLitener {
 
     @BindView(R.id.main_refresh)
     SwipeRefreshLayout refresh;
@@ -55,7 +53,10 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
     private boolean mIsLoadMore;
 
 
-    private MainAdapter mMainAdapter;
+    @Inject
+    LinearLayoutManager mLinearLayoutManager;
+    @Inject
+    MainAdapter mMainAdapter;
 
     private int page;
     public static MainFragment newInstance() {
@@ -80,17 +81,15 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        refresh.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.color_status));
+        refresh.setOnRefreshListener(this::refreshData);
+        recycler.setLayoutManager(mLinearLayoutManager);
+        recycler.setOnScrollBottomLitener(this::loadMoreData);
+        recycler.setAdapter(mMainAdapter);
         if(isSafeMultipleStatusView()){
             mMultipleStatusView.showContent();
         }
-        refresh.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.color_status));
-        refresh.setOnRefreshListener(this::refreshData);
-
-        recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recycler.setOnScrollBottomLitener(this::loadMoreData);
-        mMainAdapter = new MainAdapter(getActivity());
-        recycler.setAdapter(mMainAdapter);
-
+        mMainAdapter.setOnMainItemClickLitener(this);
         mBannerData = new ArrayList<>();
         mMenuData = new ArrayList<>();
         mListData = new ArrayList<>();
@@ -225,7 +224,26 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
        mListData = list;
        mMainAdapter.setListData(mListData);
        mMainAdapter.setLoadMoreData(false);
+
     }
 
 
+    @Override
+    public void onBannerItemClick(int pos) {
+        showMessage("点击banner："+pos);
+    }
+    @Override
+    public void onMenuItemClick(MenuEntity entity) {
+        showMessage("点击menu："+entity.getText());
+    }
+
+    @Override
+    public void onListItemClick(ListEntity entity) {
+        showMessage("点击list："+entity.getText());
+    }
+
+    @Override
+    public void onLoadMoreClick(boolean isLoadMore) {
+        showMessage("点击loadMore："+isLoadMore);
+    }
 }

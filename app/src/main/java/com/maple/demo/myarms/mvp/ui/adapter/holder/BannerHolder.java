@@ -2,10 +2,12 @@ package com.maple.demo.myarms.mvp.ui.adapter.holder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.model.entity.BannerEntity;
+import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
 import com.maple.demo.myarms.widget.banner.MyGlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -27,9 +29,11 @@ public class BannerHolder extends RecyclerView.ViewHolder {
     Banner banner;
 
     private List<String> title,url;
+    private OnMainItemClickLitener mListener;
 
-    public BannerHolder(@NonNull View itemView) {
+    public BannerHolder(@NonNull View itemView, OnMainItemClickLitener listener) {
         super(itemView);
+        this.mListener = listener;
         ButterKnife.bind(this,itemView);
     }
 
@@ -42,6 +46,12 @@ public class BannerHolder extends RecyclerView.ViewHolder {
             for (BannerEntity entity : data) {
                 title.add(entity.getTitle());
                 url.add(entity.getUrl());
+            }
+
+            if(mListener != null){
+                banner.setOnBannerListener(i->{
+                    mListener.onBannerItemClick(i);
+                });
             }
 
             banner.setImages(url)

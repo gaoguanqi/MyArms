@@ -1,6 +1,7 @@
 package com.maple.demo.myarms.mvp.contract;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
@@ -19,6 +20,8 @@ public interface MainContract {
         void initDataSuccess(List<BannerEntity> mBannerData, List<MenuEntity> mMenuData, List<ListEntity> mListData, boolean isLoadMore);
 
         void refreshDataSuccess(List<BannerEntity> mBannerData, List<MenuEntity> mMenuData, List<ListEntity> mListData, boolean isLoadMore);
+
+        Activity getActivity();
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存

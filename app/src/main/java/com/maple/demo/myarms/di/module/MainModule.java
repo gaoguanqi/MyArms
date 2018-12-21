@@ -1,5 +1,7 @@
 package com.maple.demo.myarms.di.module;
 
+import android.support.v7.widget.LinearLayoutManager;
+
 import com.jess.arms.di.scope.FragmentScope;
 
 import dagger.Module;
@@ -7,6 +9,7 @@ import dagger.Provides;
 
 import com.maple.demo.myarms.mvp.contract.MainContract;
 import com.maple.demo.myarms.mvp.model.MainModel;
+import com.maple.demo.myarms.mvp.ui.adapter.MainAdapter;
 
 
 @Module
@@ -33,4 +36,18 @@ public class MainModule {
     MainContract.Model provideMainModel(MainModel model) {
         return model;
     }
+
+    @FragmentScope
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager() {
+        return new LinearLayoutManager(view.getActivity());
+    }
+
+    @FragmentScope
+    @Provides
+    MainAdapter provideMainAdapter() {
+        return new MainAdapter(view.getActivity());
+    }
+
+
 }
