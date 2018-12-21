@@ -1,8 +1,16 @@
 package com.maple.demo.myarms.app.global;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.CrashUtils;
+import com.blankj.utilcode.util.FileIOUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.PathUtils;
+import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.Utils;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.utils.ArmsUtils;
@@ -16,7 +24,11 @@ import com.xuexiang.xupdate.XUpdate;
 import com.xuexiang.xupdate.entity.UpdateError;
 import com.xuexiang.xupdate.listener.OnUpdateFailureListener;
 
+import java.io.File;
+import java.util.List;
+
 import butterknife.ButterKnife;
+import retrofit2.http.PATCH;
 import timber.log.Timber;
 
 /**
@@ -64,8 +76,32 @@ public class AppLifecyclesImpl implements AppLifecycles {
                 .put(RefWatcher.class.getName(),
                 BuildConfig.DEBUG ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
+        initCrashUtils();
         initUtils(application);
         initUpdate(application);
+
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private void initCrashUtils() {
+        try{
+            if(PermissionUtils.isGranted("android.permission.WRITE_EXTERNAL_STORAGE","android.permission.READ_EXTERNAL_STORAGE")){
+                String path = Environment.getExternalStorageDirectory().getPath()+"/CrashFile";
+                LogUtils.logGGQ("path:"+path);
+                if(FileUtils.createOrExistsDir(path)){
+                    CrashUtils.init(path);
+                }
+                List<File> files = FileUtils.listFilesInDir(path);
+                if(files != null && !files.isEmpty()){
+                    for (int i = 0; i < files.size(); i++) {
+                        LogUtils.logCrash("File："+i+FileIOUtils.readFile2String(files.get(i)));
+                    }
+                }
+            }
+        }catch (Exception e){
+            LogUtils.logGGQ("initCrashUtils 异常");
+        }
     }
 
     private void initUpdate(Application application) {

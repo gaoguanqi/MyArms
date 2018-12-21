@@ -45,7 +45,6 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
         mHandler = new MyHandler(this);
         mHandler.sendEmptyMessageDelayed(WHAT_INIT_DATA,2000);
     }

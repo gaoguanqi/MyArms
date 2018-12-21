@@ -19,7 +19,11 @@ public final class LogUtils {
         if(isShow){
             Log.i("GGQ", msg);
         }
+    }
 
-
+    public static void logCrash(String msg){
+        if(isShow){
+            Log.e("Crash", msg);
+        }
     }
 }

@@ -41,7 +41,10 @@ public class RegisteActivity extends BaseViewActivity<RegistePresenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+            findViewById(R.id.btn_registe).setOnClickListener(v->{
+                String s = null;
+                s.length();
+            });
     }
 
     @Override
