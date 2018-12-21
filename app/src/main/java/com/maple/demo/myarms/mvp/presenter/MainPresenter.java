@@ -115,7 +115,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                         mMenuData.add(mMenuEntity);
 
                         //list
-                        for (int i = 1; i <= 20; i++) {
+                        for (int i = 1; i <= 10; i++) {
                             mListEntity = new ListEntity();
                             mListEntity.setImage("https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=d034324c01f79052eb1f403c3cf2d738/0dd7912397dda1445da42dedbab7d0a20df486c4.jpg");
                             mListEntity.setText("条目"+i);
@@ -154,7 +154,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
 
         mListData.clear();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 10; i++) {
             mListEntity = new ListEntity();
             mListEntity.setImage("https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=d034324c01f79052eb1f403c3cf2d738/0dd7912397dda1445da42dedbab7d0a20df486c4.jpg");
             mListEntity.setText("条目"+i);
@@ -173,7 +173,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 .subscribe(new ErrorHandleSubscriber<Long>(mErrorHandler) {
                     @Override
                     public void onNext(Long aLong) {
-                        for (int i = 1; i <= 20; i++) {
+                        for (int i = 1; i <= 10; i++) {
                             mListEntity = new ListEntity();
                             mListEntity.setImage("https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=d034324c01f79052eb1f403c3cf2d738/0dd7912397dda1445da42dedbab7d0a20df486c4.jpg");
                             mListEntity.setText("条目"+(size+i));

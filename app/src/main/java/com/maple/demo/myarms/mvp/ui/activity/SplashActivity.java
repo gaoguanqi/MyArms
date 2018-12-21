@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -19,11 +20,15 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
 
+    @BindView(R.id.tv_time)
+    TextView tvTime;
     @Inject
     RxPermissions mRxPermissions;
 
@@ -97,6 +102,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.applyPermissions();
+        mPresenter.applyPermissions(tvTime);
     }
 }

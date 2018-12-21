@@ -173,7 +173,7 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
 
 
     private void loadMoreData() {
-        if(page <= 5){
+        if(page <= Integer.MAX_VALUE){
             mMainAdapter.setLoadMoreError(false);
             mMainAdapter.setLoadMoreData(true);
             mPresenter.loadMoreData(mListData.size());

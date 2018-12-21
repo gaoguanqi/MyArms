@@ -3,6 +3,7 @@ package com.maple.demo.myarms.mvp.presenter;
 import android.app.Application;
 import android.content.Intent;
 import android.view.Gravity;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -26,7 +27,11 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -59,14 +64,14 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
         this.mApplication = null;
     }
 
-    public void applyPermissions() {
+    public void applyPermissions(TextView tvTime) {
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.applyPermissions(new PermissionUtil.RequestPermission() {
             @Override
             public void onRequestPermissionSuccess() {
                 //全部权限通过的回调
                 LogUtils.logGGQ("onRequestPermissionSuccess");
-                launchTarget();
+                launchTarget(tvTime);
             }
 
             @Override
@@ -76,7 +81,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
                 for (String permission : permissions) {
                     LogUtils.logGGQ(permission+"被拒绝了");
                 }
-                launchTarget();
+                launchTarget(tvTime);
             }
 
             @Override
@@ -111,23 +116,71 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
         }
     }
 
-    private void launchTarget() {
-        Observable.timer(3, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<Long>(mErrorHandler) {
+    private void launchTarget(TextView tvTime) {
+//        Observable.timer(3, TimeUnit.SECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+//                .subscribe(new ErrorHandleSubscriber<Long>(mErrorHandler) {
+//                    @Override
+//                    public void onNext(Long aLong) {
+//                        Intent intent;
+//                        if(SPUtils.getInstance().getBoolean(AppContent.SaveInfoKey.HASWECLOME)){
+//                            intent = new Intent(mRootView.getActivity(), HomeActivity.class);
+//                        }else{
+//                            intent = new Intent(mRootView.getActivity(), WelcomeActivity.class);
+//                        }
+//                        mRootView.launchActivity(intent);
+//                        mRootView.killMyself();
+//                    }
+//                });
+
+        final int count = 3;//倒计时3秒
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(count + 1)
+                .map(new Function<Long, Long>() {
                     @Override
-                    public void onNext(Long aLong) {
-                        Intent intent;
-                        if(SPUtils.getInstance().getBoolean(AppContent.SaveInfoKey.HASWECLOME)){
-                            intent = new Intent(mRootView.getActivity(), HomeActivity.class);
-                        }else{
-                            intent = new Intent(mRootView.getActivity(), WelcomeActivity.class);
-                        }
-                        mRootView.launchActivity(intent);
-                        mRootView.killMyself();
+                    public Long apply(Long aLong) throws Exception {
+                        return count - aLong;
                     }
-                });
+                })
+                .observeOn(AndroidSchedulers.mainThread())//ui线程中进行控件更新
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+
+                    }
+                }).subscribe(new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Long num) {
+                tvTime.setText("剩余" + num + "秒");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                startTagetActivity();
+            }
+
+            @Override
+            public void onComplete() {
+                startTagetActivity();
+            }
+        });
+    }
+
+    private void startTagetActivity() {
+        Intent intent;
+        if(SPUtils.getInstance().getBoolean(AppContent.SaveInfoKey.HASWECLOME)){
+            intent = new Intent(mRootView.getActivity(), HomeActivity.class);
+        }else{
+            intent = new Intent(mRootView.getActivity(), WelcomeActivity.class);
+        }
+        mRootView.launchActivity(intent);
+        mRootView.killMyself();
     }
 }
