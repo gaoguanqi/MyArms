@@ -14,7 +14,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintDimensionRatio="17:10"
-        android:background="@mipmap/ic_launcher"
         app:indicator_drawable_selected="@drawable/shape_indicator_selected"
         app:indicator_drawable_unselected="@drawable/shape_indicator_unselected"
         app:delay_time="5000"

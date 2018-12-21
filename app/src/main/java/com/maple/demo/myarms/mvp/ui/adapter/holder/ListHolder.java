@@ -50,4 +50,8 @@ public class ListHolder extends RecyclerView.ViewHolder {
                         .imageView(image)
                         .build());
     }
+
+    public void setData(int pos) {
+        desc.setText(String.valueOf(pos));
+    }
 }

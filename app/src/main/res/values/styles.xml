@@ -61,4 +61,13 @@
         <item name="android:windowAnimationStyle">@style/anim_slide</item>
     </style>
 
+    <!--load more-->
+    <style name="LoadingProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/anim_loading</item>
+        <item name="android:minWidth">27dip</item>
+        <item name="android:maxWidth">27dip</item>
+        <item name="android:minHeight">27dip</item>
+        <item name="android:maxHeight">27dip</item>
+    </style>
+
 </resources>

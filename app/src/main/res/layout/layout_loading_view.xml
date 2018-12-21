@@ -9,7 +9,7 @@
         android:id="@+id/progressBar"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:indeterminateDrawable="@drawable/rotate_loading"
+        style="@style/LoadingProgressBar"
         android:layout_centerInParent="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -11,9 +11,10 @@ import com.maple.demo.myarms.mvp.model.entity.BannerEntity;
 import com.maple.demo.myarms.mvp.model.entity.ListEntity;
 import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.BannerHolder;
-import com.maple.demo.myarms.mvp.ui.adapter.holder.FooterHolder;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.ListHolder;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.MenuHolder;
+import com.maple.demo.myarms.utils.LogUtils;
+import com.maple.demo.myarms.widget.loadmore.LoadMoreHolder;
 
 import java.util.List;
 
@@ -26,14 +27,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public static final int TYPE_BANNER = 0;
     public static final int TYPE_MENU = 1;
     public static final int TYPE_LIST = 2;
-    public static final int TYPE_FOOTER = 3;
+    public static final int TYPE_LOAD_MORE = 3;
 
     private Context mContext;
     private List<BannerEntity> mBannerData;
     private List<MenuEntity> mMenuData;
     private List<ListEntity> mListData;
-    private boolean mFooterData;
+    private boolean isLoadMore;
 
+    private LoadMoreHolder loadMoreHolder;
 
     private LayoutInflater mInflater;
     public MainAdapter(Context context) {
@@ -44,14 +46,17 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        LogUtils.logGGQ("-type:::"+viewType);
         if (viewType == TYPE_BANNER) {
             return new BannerHolder(mInflater.inflate(R.layout.item_main_banner, parent, false));
         } else if (viewType == TYPE_MENU) {
             return new MenuHolder(mInflater.inflate(R.layout.item_main_menu, parent, false));
         } else if(viewType == TYPE_LIST){
             return new ListHolder(mInflater.inflate(R.layout.item_main_list, parent, false));
-        } else if(viewType == TYPE_FOOTER){
-            return new FooterHolder(mInflater.inflate(R.layout.item_main_footer, parent, false));
+        } else if(viewType == TYPE_LOAD_MORE){
+            loadMoreHolder = new LoadMoreHolder(mInflater.inflate(R.layout.item_load_more, parent, false));
+            return loadMoreHolder;
         }else{
             return null;
         }
@@ -59,34 +64,37 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        LogUtils.logGGQ("onBindViewHolder:::"+position);
         if (holder instanceof BannerHolder) {
             ((BannerHolder) holder).setData(mBannerData);
         }else if(holder instanceof MenuHolder){
             ((MenuHolder) holder).setData(mMenuData);
         }else if(holder instanceof ListHolder) {
-            ((ListHolder) holder).setData(mListData.get(position -2));
-        }else if(holder instanceof FooterHolder) {
-            ((FooterHolder) holder).setData(mFooterData);
+            LogUtils.logGGQ("ListHolder:::"+position);
+            ((ListHolder) holder).setData(mListData.get(position - 2));
+        }else if(holder instanceof LoadMoreHolder) {
+            ((LoadMoreHolder) holder).setData(isLoadMore);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mBannerData == null || mMenuData == null || mListData == null ? 0 : mFooterData? mListData.size()+3:mListData.size()+2;
+        return mBannerData == null || mMenuData == null || mListData == null ? 0 : mListData.size()+3 ;
     }
 
 
     @Override
     public int getItemViewType(int position) {
         //return super.getItemViewType(position);
+        LogUtils.logGGQ("getItemViewType:::"+position +"--getItemCount::"+getItemCount());
         if (position == 0) {
             return TYPE_BANNER;
         }else if (position == 1) {
             return TYPE_MENU;
-        }else if(position >= 2 && position < getItemCount()) {
+        }else if(position >= 2 && position < getItemCount() -1) {
             return TYPE_LIST;
-        }else if(position == getItemCount()){
-            return TYPE_FOOTER;
+        }else if(position + 1 == getItemCount()){
+            return TYPE_LOAD_MORE;
         }else{
             return -1;
         }
@@ -94,12 +102,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public void setBannerData(List<BannerEntity> data) {
         this.mBannerData = data;
-        notifyDataSetChanged();
+        notifyItemChanged(0);
     }
 
     public void setMenuData(List<MenuEntity> data) {
         this.mMenuData = data;
-        notifyDataSetChanged();
+        notifyItemChanged(1);
     }
 
     public void setListData(List<ListEntity> data) {
@@ -107,16 +115,26 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         notifyDataSetChanged();
     }
 
-    public void setFooterData(boolean footerData) {
-        this.mFooterData = footerData;
-        notifyDataSetChanged();
+    public void setLoadMoreData(boolean isLoadMore) {
+        this.isLoadMore = isLoadMore;
+       if(loadMoreHolder != null){
+           loadMoreHolder.setData(isLoadMore);
+           notifyItemChanged(getItemCount());
+       }
     }
 
-    public void setData(List<BannerEntity> bannerData, List<MenuEntity> menuData, List<ListEntity> listData, boolean footerData) {
+    public void setData(List<BannerEntity> bannerData, List<MenuEntity> menuData, List<ListEntity> listData, boolean isLoadMore) {
         this.mBannerData = bannerData;
         this.mMenuData = menuData;
         this.mListData = listData;
-        this.mFooterData = footerData;
+        this.isLoadMore = isLoadMore;
         notifyDataSetChanged();
+    }
+
+    public void setLoadMoreError(boolean isLoadMoreError) {
+        if(loadMoreHolder != null){
+            loadMoreHolder.setErrorData(isLoadMoreError);
+            notifyItemChanged(getItemCount());
+        }
     }
 }
