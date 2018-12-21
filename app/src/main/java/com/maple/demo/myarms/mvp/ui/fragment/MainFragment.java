@@ -94,7 +94,6 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
         mMenuData = new ArrayList<>();
         mListData = new ArrayList<>();
         showLoading();
-        page = 1;
         mPresenter.initData();
     }
 
@@ -174,7 +173,7 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
 
 
     private void loadMoreData() {
-        if(page < 5){
+        if(page <= 5){
             mMainAdapter.setLoadMoreError(false);
             mMainAdapter.setLoadMoreData(true);
             mPresenter.loadMoreData(mListData.size());
