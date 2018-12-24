@@ -16,6 +16,8 @@ android {
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled = true
     }
     greendao {
         schemaVersion 1 // 数据库版本号
@@ -42,6 +44,7 @@ dependencies {
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
 
+    implementation rootProject.ext.dependencies["multidex"]
     //support
     implementation rootProject.ext.dependencies["appcompat-v7"]
 //    implementation rootProject.ext.dependencies["cardview-v7"]
@@ -73,5 +76,6 @@ dependencies {
     implementation rootProject.ext.dependencies["XUpdate"]
     implementation rootProject.ext.dependencies["okhttp-utils"]
     implementation rootProject.ext.dependencies["banner"]
-    implementation rootProject.ext.dependencies["paginate"]
+    //implementation rootProject.ext.dependencies["paginate"]
+    implementation rootProject.ext.dependencies["GSYVideoPlayer"]
 }

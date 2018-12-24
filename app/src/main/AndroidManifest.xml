@@ -47,7 +47,9 @@
             android:name=".mvp.ui.activity.SlideActivity"
             android:theme="@style/AppTheme.NoTitleBar.Slide" />
         <activity android:name=".mvp.ui.activity.RegisteActivity" />
-        <activity android:name=".mvp.ui.activity.LoginActivity"/>
+        <activity android:name=".mvp.ui.activity.LoginActivity" />
+        <activity android:name=".mvp.ui.activity.VideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
     </application>
 
 </manifest>

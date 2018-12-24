@@ -7,17 +7,13 @@ import android.support.annotation.Nullable;
 
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
-import com.maple.demo.myarms.app.base.BaseActivity;
+import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseViewActivity;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerRegisteComponent;
 import com.maple.demo.myarms.di.module.RegisteModule;
 import com.maple.demo.myarms.mvp.contract.RegisteContract;
 import com.maple.demo.myarms.mvp.presenter.RegistePresenter;
-
-import com.maple.demo.myarms.R;
-
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -41,10 +37,7 @@ public class RegisteActivity extends BaseViewActivity<RegistePresenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-            findViewById(R.id.btn_registe).setOnClickListener(v->{
-                String s = null;
-                s.length();
-            });
+          
     }
 
     @Override

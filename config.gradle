@@ -119,6 +119,7 @@ ext {
             "XUpdate"          : "com.github.xuexiangjys:XUpdate:1.0.6",
             "okhttp-utils"          : "com.qianwen:okhttp-utils:3.8.0",
             "banner"          : "com.youth.banner:banner:1.4.10",
+            "GSYVideoPlayer"          : "com.shuyu:GSYVideoPlayer:6.0.2",
             //-------------------------//
             "mvp-arms"              : "me.jessyan:arms:2.5.0",
 

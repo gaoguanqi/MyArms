@@ -24,6 +24,7 @@ import com.maple.demo.myarms.mvp.model.entity.ListEntity;
 import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.presenter.MainPresenter;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
+import com.maple.demo.myarms.mvp.ui.activity.VideoPlayerActivity;
 import com.maple.demo.myarms.mvp.ui.adapter.MainAdapter;
 import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
 import com.maple.demo.myarms.utils.ToastUtil;
@@ -239,6 +240,7 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
     @Override
     public void onListItemClick(ListEntity entity) {
         showMessage("点击list："+entity.getText());
+        launchActivity(new Intent(getActivity(), VideoPlayerActivity.class));
     }
 
     @Override
