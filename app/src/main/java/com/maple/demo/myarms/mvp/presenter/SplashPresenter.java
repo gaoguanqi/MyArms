@@ -32,9 +32,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 
 
 @ActivityScope
@@ -144,6 +142,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
                         return count - aLong;
                     }
                 })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView)) //绑定Activity生命周期
                 .observeOn(AndroidSchedulers.mainThread())//ui线程中进行控件更新
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
