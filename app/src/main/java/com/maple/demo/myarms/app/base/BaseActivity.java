@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.InflateException;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,6 +28,7 @@ import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.manager.callback.OnNetStateCallback;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.app.receiver.NetBroadcastReceiver;
+import com.maple.demo.myarms.widget.dialog.CustomDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.aviran.cookiebar2.CookieBar;
@@ -71,6 +73,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     protected ImmersionBar mImmersionBar;
     private NetBroadcastReceiver mNetBroadcastReceiver;
+    private CustomDialog mLoadingDialog;
 
     @NonNull
     @Override
@@ -344,5 +347,25 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
                 .setMessage(type.toString())
                 .setCookiePosition(CookieBar.TOP)  // Cookie will be displayed at the bottom
                 .show();
+    }
+
+    protected void showMyLoading(){
+        if(mLoadingDialog == null){
+            mLoadingDialog = new CustomDialog.Builder(this)
+                    .view(R.layout.dialog_loading)
+                    .setGravity(Gravity.CENTER)//设置dialog显示位置
+                    .setWidthDP(60) //设置宽
+                    .setHeightDP(60)//设置高
+                    .build();
+        }
+        if(!mLoadingDialog.isShowing()){
+            mLoadingDialog.show();
+        }
+    }
+
+    protected void hideMyLoading(){
+        if(mLoadingDialog != null && mLoadingDialog.isShowing()){
+            mLoadingDialog.cancel();
+        }
     }
 }

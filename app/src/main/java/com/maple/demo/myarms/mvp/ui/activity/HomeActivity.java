@@ -19,7 +19,6 @@ import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseActivity;
 import com.maple.demo.myarms.app.base.BaseFragment;
 import com.maple.demo.myarms.app.db.UserDao;
-import com.maple.demo.myarms.app.global.AppController;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerHomeComponent;
 import com.maple.demo.myarms.di.module.HomeModule;
@@ -122,12 +121,12 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 
     @Override
     public void showLoading() {
-
+        showMyLoading();
     }
 
     @Override
     public void hideLoading() {
-
+        hideMyLoading();
     }
 
     @Override

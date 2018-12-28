@@ -9,7 +9,6 @@ import android.view.View;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
-import com.maple.demo.myarms.app.base.BaseActivity;
 import com.maple.demo.myarms.app.base.BaseViewActivity;
 import com.maple.demo.myarms.app.db.UserDao;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
@@ -18,8 +17,8 @@ import com.maple.demo.myarms.di.module.LoginModule;
 import com.maple.demo.myarms.mvp.contract.LoginContract;
 import com.maple.demo.myarms.mvp.model.entity.UserEntity;
 import com.maple.demo.myarms.mvp.presenter.LoginPresenter;
+import com.maple.demo.myarms.utils.ToastUtil;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -60,7 +59,7 @@ public class LoginActivity extends BaseViewActivity<LoginPresenter> implements L
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        ArmsUtils.snackbarText(message);
+        ToastUtil.showToast(message);
     }
 
     @Override
@@ -96,6 +95,7 @@ public class LoginActivity extends BaseViewActivity<LoginPresenter> implements L
             case R.id.btn_go_registe:
                 launchActivity(new Intent(this,RegisteActivity.class));
                 break;
+             default:
         }
     }
 

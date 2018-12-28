@@ -47,6 +47,7 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
     public void initData(@Nullable Bundle savedInstanceState) {
         mHandler = new MyHandler(this);
         mHandler.sendEmptyMessageDelayed(WHAT_INIT_DATA,2000);
+        showLoading();
     }
 
 
@@ -58,12 +59,12 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
 
     @Override
     public void showLoading() {
-
+        showMyLoading();
     }
 
     @Override
     public void hideLoading() {
-
+        hideMyLoading();
     }
 
     @Override
@@ -112,6 +113,7 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
                     break;
                 case WHAT_RETRY_DATA:
                     if(weakReference.get().isSafeMultipleStatusView()){
+                        weakReference.get().hideMyLoading();
                         weakReference.get().mMultipleStatusView.showContent();
                     }
                     break;

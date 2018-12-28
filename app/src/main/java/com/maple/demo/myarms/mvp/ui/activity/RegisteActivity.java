@@ -14,6 +14,7 @@ import com.maple.demo.myarms.di.component.DaggerRegisteComponent;
 import com.maple.demo.myarms.di.module.RegisteModule;
 import com.maple.demo.myarms.mvp.contract.RegisteContract;
 import com.maple.demo.myarms.mvp.presenter.RegistePresenter;
+import com.maple.demo.myarms.utils.ToastUtil;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -53,7 +54,7 @@ public class RegisteActivity extends BaseViewActivity<RegistePresenter> implemen
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        ArmsUtils.snackbarText(message);
+        ToastUtil.showToast(message);
     }
 
     @Override

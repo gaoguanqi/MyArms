@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.jess.arms.integration.cache.CacheType;
 import com.jess.arms.integration.lifecycle.FragmentLifecycleable;
 import com.jess.arms.mvp.IPresenter;
 import com.jess.arms.utils.ArmsUtils;
+import com.maple.demo.myarms.R;
+import com.maple.demo.myarms.widget.dialog.CustomDialog;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import javax.inject.Inject;
@@ -37,7 +40,7 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
-
+    private CustomDialog mLoadingDialog;
     @NonNull
     @Override
     public synchronized Cache<String, Object> provideCache() {
@@ -96,6 +99,26 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     @Override
     public boolean useEventBus() {
         return true;
+    }
+
+    protected void showMyLoading(){
+        if(mLoadingDialog == null){
+            mLoadingDialog = new CustomDialog.Builder(getActivity())
+                    .view(R.layout.dialog_loading)
+                    .setGravity(Gravity.CENTER)//设置dialog显示位置
+                    .setWidthDP(400) //设置宽
+                    .setHeightDP(236)//设置高
+                    .build();
+        }
+        if(!mLoadingDialog.isShowing()){
+            mLoadingDialog.show();
+        }
+    }
+
+    protected void hideMyLoading(){
+        if(mLoadingDialog != null && mLoadingDialog.isShowing()){
+            mLoadingDialog.cancel();
+        }
     }
 
 }
