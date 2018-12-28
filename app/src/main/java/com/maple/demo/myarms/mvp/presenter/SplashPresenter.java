@@ -133,7 +133,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
 //                    }
 //                });
 
-        final int count = 3;//倒计时3秒
+        final int count = 1;//倒计时3秒
         Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(count + 1)
                 .map(new Function<Long, Long>() {

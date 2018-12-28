@@ -240,8 +240,6 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
     @Override
     public void onListItemClick(ListEntity entity) {
         showMessage("点击list："+entity.getText());
-        mMainAdapter.setLoadMoreData(false);
-        launchActivity(new Intent(getActivity(), VideoPlayerActivity.class));
     }
 
     @Override

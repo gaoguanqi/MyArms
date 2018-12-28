@@ -116,7 +116,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setCurrentItem(TAB_HOME);
-        mPresenter.update();
+        //mPresenter.update();
     }
 
     @Override

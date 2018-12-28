@@ -10,20 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
+import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseViewFragment;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerMineComponent;
 import com.maple.demo.myarms.di.module.MineModule;
 import com.maple.demo.myarms.mvp.contract.MineContract;
 import com.maple.demo.myarms.mvp.presenter.MinePresenter;
-
-import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
+import com.maple.demo.myarms.mvp.ui.activity.VideoPlayerActivity;
 import com.maple.demo.myarms.utils.ToastUtil;
+
+import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -52,7 +52,9 @@ public class MineFragment extends BaseViewFragment<MinePresenter> implements Min
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+        if(isSafeMultipleStatusView()){
+            mMultipleStatusView.showContent();
+        }
     }
 
     /**
@@ -120,7 +122,7 @@ public class MineFragment extends BaseViewFragment<MinePresenter> implements Min
 
     @Override
     public void killMyself() {
-        ((HomeActivity)getActivity()).killMyself();
+        ((HomeActivity) getActivity()).killMyself();
     }
 
     @Override
@@ -140,5 +142,10 @@ public class MineFragment extends BaseViewFragment<MinePresenter> implements Min
                 .setTitle("我的")
                 .setToolbarLitener(this)
                 .build();
+    }
+
+    @OnClick(R.id.btn_player)
+    public void onViewClicked() {
+        launchActivity(new Intent(getActivity(), VideoPlayerActivity.class));
     }
 }

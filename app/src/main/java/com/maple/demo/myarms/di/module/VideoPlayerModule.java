@@ -1,12 +1,16 @@
 package com.maple.demo.myarms.di.module;
 
+import android.support.v7.widget.LinearLayoutManager;
+
 import com.jess.arms.di.scope.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;
 
+import com.jess.arms.di.scope.FragmentScope;
 import com.maple.demo.myarms.mvp.contract.VideoPlayerContract;
 import com.maple.demo.myarms.mvp.model.VideoPlayerModel;
+import com.maple.demo.myarms.mvp.ui.adapter.PlayerAdapter;
 
 
 @Module
@@ -32,5 +36,17 @@ public class VideoPlayerModule {
     @Provides
     VideoPlayerContract.Model provideVideoPlayerModel(VideoPlayerModel model) {
         return model;
+    }
+
+    @ActivityScope
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager() {
+        return new LinearLayoutManager(view.getActivity());
+    }
+
+    @ActivityScope
+    @Provides
+    PlayerAdapter providePlayerAdapter() {
+        return new PlayerAdapter(view.getActivity());
     }
 }

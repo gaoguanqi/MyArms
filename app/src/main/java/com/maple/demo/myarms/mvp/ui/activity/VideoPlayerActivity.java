@@ -1,13 +1,16 @@
 package com.maple.demo.myarms.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewTreeObserver;
 
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
@@ -17,10 +20,16 @@ import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerVideoPlayerComponent;
 import com.maple.demo.myarms.di.module.VideoPlayerModule;
 import com.maple.demo.myarms.mvp.contract.VideoPlayerContract;
+import com.maple.demo.myarms.mvp.model.entity.PlayerEntity;
 import com.maple.demo.myarms.mvp.presenter.VideoPlayerPresenter;
+import com.maple.demo.myarms.mvp.ui.adapter.PlayerAdapter;
+import com.maple.demo.myarms.utils.ToastUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -32,9 +41,12 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
     @BindView(R.id.player_recycler)
     RecyclerView recycler;
 
-    private OrientationUtils orientationUtils;
-
-    private String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+    @Inject
+    LinearLayoutManager mLinearLayoutManager;
+    @Inject
+    PlayerAdapter mAdapter;
+    private List<PlayerEntity> mData;
+    private PlayerEntity mEntity;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -52,44 +64,60 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
     }
 
     @Override
+    protected boolean usePortrait() {
+        return false;
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        recycler.setNestedScrollingEnabled(false);
+        recycler.setLayoutManager(mLinearLayoutManager);
+        mData = new ArrayList<>();
+        PagerSnapHelper snapHelper = new PagerSnapHelper() {
+            // 在 Adapter的 onBindViewHolder 之后执行
+            @Override
+            public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
+                //return super.findTargetSnapPosition(layoutManager, velocityX, velocityY);
+                int targetPos = super.findTargetSnapPosition(layoutManager, velocityX, velocityY);
+                showMessage("滑到到 " + targetPos + "位置");
+                return targetPos;
+            }
+
+            // 在 Adapter的 onBindViewHolder 之后执行
+            @Nullable
+            @Override
+            public View findSnapView(RecyclerView.LayoutManager layoutManager) {
+                //return super.findSnapView(layoutManager);
+                View view = super.findSnapView(layoutManager);
+                return view;
+            }
+        };
+        snapHelper.attachToRecyclerView(recycler);
+        mAdapter.setData(mData);
+        recycler.setAdapter(mAdapter);
+
+        mEntity = new PlayerEntity();
+        mEntity.setTitle("1");
+        mEntity.setUrl("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        mEntity.setImage("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
+        mData.add(mEntity);
+
+        mEntity = new PlayerEntity();
+        mEntity.setTitle("2");
+        mEntity.setUrl("http://wdquan-space.b0.upaiyun.com/VIDEO/2018/11/22/ae0645396048_hls_time10.m3u8");
+        mEntity.setImage("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
+        mData.add(mEntity);
+
+
+        if(isSafeMultipleStatusView()){
+            mMultipleStatusView.showContent();
+        }
+        mAdapter.setData(mData);
 
 
 
-//        player.setUp(source1, true, "测试视频");
-//
-//        //增加封面
-//        ImageView imageView = new ImageView(this);
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        imageView.setImageResource(R.drawable.ic_progress);
-//        player.setThumbImageView(imageView);
-//        //增加title
-//        player.getTitleTextView().setVisibility(View.VISIBLE);
-//        //设置返回键
-//        player.getBackButton().setVisibility(View.VISIBLE);
-//        //设置旋转
-//        orientationUtils = new OrientationUtils(this, player);
-//        //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-//        player.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                orientationUtils.resolveByClick();
-//            }
-//        });
-//        //是否可以滑动调整
-//        player.setIsTouchWiget(true);
-//        //设置返回按键功能
-//        player.getBackButton().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
-//
-//        if(isSafeMultipleStatusView()){
-//            mMultipleStatusView.showContent();
-//        }
-//        player.startPlayLogic();
+
+
     }
 
     @Override
@@ -105,7 +133,7 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
     @Override
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
-        ArmsUtils.snackbarText(message);
+        ToastUtil.showToast(message);
     }
 
     @Override
@@ -127,36 +155,36 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
                 .build();
     }
 
+
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-       // player.onVideoPause();
+        GSYVideoManager.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //player.onVideoResume();
-    }
-
-    @Override
-    public void onBackPressed() {
-        //先返回正常状态
-        if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-           // player.getFullscreenButton().performClick();
-            return;
-        }
-        //释放所有
-        //player.setVideoAllCallBack(null);
-        super.onBackPressed();
+        GSYVideoManager.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        GSYVideoManager.releaseAllVideos();
-//        if (orientationUtils != null){
-//            orientationUtils.releaseListener();
-//        }
+        GSYVideoManager.releaseAllVideos();
     }
 }
