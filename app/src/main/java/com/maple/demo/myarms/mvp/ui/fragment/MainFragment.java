@@ -26,7 +26,7 @@ import com.maple.demo.myarms.mvp.presenter.MainPresenter;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
 import com.maple.demo.myarms.mvp.ui.activity.VideoPlayerActivity;
 import com.maple.demo.myarms.mvp.ui.adapter.MainAdapter;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
+import com.maple.demo.myarms.mvp.ui.adapter.listener.OnMainItemClickListener;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.maple.demo.myarms.widget.loadmore.LoadMoreRecyclerView;
 
@@ -40,7 +40,7 @@ import butterknife.BindView;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class MainFragment extends BaseLazyFragment<MainPresenter> implements MainContract.View, OnMainItemClickLitener {
+public class MainFragment extends BaseLazyFragment<MainPresenter> implements MainContract.View, OnMainItemClickListener {
 
     @BindView(R.id.main_refresh)
     SwipeRefreshLayout refresh;
@@ -90,7 +90,7 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
         if(isSafeMultipleStatusView()){
             mMultipleStatusView.showContent();
         }
-        mMainAdapter.setOnMainItemClickLitener(this);
+        mMainAdapter.setOnClickListener(this);
         mBannerData = new ArrayList<>();
         mMenuData = new ArrayList<>();
         mListData = new ArrayList<>();

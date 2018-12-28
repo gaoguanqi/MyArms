@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -28,8 +29,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> implements VideoPlayerContract.View {
 
-    @BindView(R.id.player)
-    StandardGSYVideoPlayer player;
+    @BindView(R.id.player_recycler)
+    RecyclerView recycler;
 
     private OrientationUtils orientationUtils;
 
@@ -52,40 +53,43 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        player.setUp(source1, true, "测试视频");
 
-        //增加封面
-        ImageView imageView = new ImageView(this);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.drawable.ic_progress);
-        player.setThumbImageView(imageView);
-        //增加title
-        player.getTitleTextView().setVisibility(View.VISIBLE);
-        //设置返回键
-        player.getBackButton().setVisibility(View.VISIBLE);
-        //设置旋转
-        orientationUtils = new OrientationUtils(this, player);
-        //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-        player.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                orientationUtils.resolveByClick();
-            }
-        });
-        //是否可以滑动调整
-        player.setIsTouchWiget(true);
-        //设置返回按键功能
-        player.getBackButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
-        if(isSafeMultipleStatusView()){
-            mMultipleStatusView.showContent();
-        }
-        player.startPlayLogic();
+
+//        player.setUp(source1, true, "测试视频");
+//
+//        //增加封面
+//        ImageView imageView = new ImageView(this);
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setImageResource(R.drawable.ic_progress);
+//        player.setThumbImageView(imageView);
+//        //增加title
+//        player.getTitleTextView().setVisibility(View.VISIBLE);
+//        //设置返回键
+//        player.getBackButton().setVisibility(View.VISIBLE);
+//        //设置旋转
+//        orientationUtils = new OrientationUtils(this, player);
+//        //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
+//        player.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                orientationUtils.resolveByClick();
+//            }
+//        });
+//        //是否可以滑动调整
+//        player.setIsTouchWiget(true);
+//        //设置返回按键功能
+//        player.getBackButton().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
+//
+//        if(isSafeMultipleStatusView()){
+//            mMultipleStatusView.showContent();
+//        }
+//        player.startPlayLogic();
     }
 
     @Override
@@ -126,33 +130,33 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
     @Override
     protected void onPause() {
         super.onPause();
-        player.onVideoPause();
+       // player.onVideoPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        player.onVideoResume();
+        //player.onVideoResume();
     }
 
     @Override
     public void onBackPressed() {
         //先返回正常状态
         if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            player.getFullscreenButton().performClick();
+           // player.getFullscreenButton().performClick();
             return;
         }
         //释放所有
-        player.setVideoAllCallBack(null);
+        //player.setVideoAllCallBack(null);
         super.onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GSYVideoManager.releaseAllVideos();
-        if (orientationUtils != null){
-            orientationUtils.releaseListener();
-        }
+//        GSYVideoManager.releaseAllVideos();
+//        if (orientationUtils != null){
+//            orientationUtils.releaseListener();
+//        }
     }
 }

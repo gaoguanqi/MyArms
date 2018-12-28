@@ -16,8 +16,7 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMenuItemClickLitener;
+import com.maple.demo.myarms.mvp.ui.adapter.listener.OnMenuItemClickListener;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
  * time: 2018/12/20 13:18
  * description:
  */
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     private Context mContext;
     private List<MenuEntity> mData;
@@ -40,15 +39,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
      */
     private ImageLoader mImageLoader;
 
-    private OnMenuItemClickLitener mLitener;
+    private OnMenuItemClickListener mListener;
 
     public void setData(List<MenuEntity> data){
         this.mData = data;
         notifyDataSetChanged();
     }
 
-    public void setOnMenuItemClickLitener(OnMenuItemClickLitener litener){
-        this.mLitener = litener;
+    public void setOnClickListener(OnMenuItemClickListener listener){
+        this.mListener = listener;
     }
 
     public MenuAdapter(Context context) {
@@ -57,16 +56,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
 
     @NonNull
     @Override
-    public MenuHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MenuHolder(LayoutInflater.from(mContext).inflate(R.layout.item_menu, parent, false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_menu, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MenuHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setData(mData.get(position));
-        if(mLitener != null){
+        if(mListener != null){
             holder.root.setOnClickListener(v ->{
-                mLitener.onItemClickLitener(mData.get(position));
+                mListener.onItemClickLitener(mData.get(position));
             });
         }
     }
@@ -76,14 +75,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuHolder> {
         return mData == null ? 0 :mData.size();
     }
 
-    public class MenuHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_menu)
         ConstraintLayout root;
         @BindView(R.id.iv_icon)
         ImageView icon;
         @BindView(R.id.tv_text)
         TextView text;
-        public MenuHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
             mAppComponent =  ArmsUtils.obtainAppComponentFromContext(itemView.getContext());

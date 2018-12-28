@@ -13,7 +13,7 @@ import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.BannerHolder;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.ListHolder;
 import com.maple.demo.myarms.mvp.ui.adapter.holder.MenuHolder;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
+import com.maple.demo.myarms.mvp.ui.adapter.listener.OnMainItemClickListener;
 import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.widget.loadmore.LoadMoreHolder;
 
@@ -39,10 +39,10 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private LoadMoreHolder loadMoreHolder;
 
     private LayoutInflater mInflater;
-    private OnMainItemClickLitener mLitener;
+    private OnMainItemClickListener mListener;
 
-    public void setOnMainItemClickLitener(OnMainItemClickLitener litener){
-        this.mLitener = litener;
+    public void setOnClickListener(OnMainItemClickListener listener){
+        this.mListener = listener;
     }
 
     public MainAdapter(Context context) {
@@ -56,13 +56,13 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         LogUtils.logGGQ("-type:::"+viewType);
         if (viewType == TYPE_BANNER) {
-            return new BannerHolder(mInflater.inflate(R.layout.item_main_banner, parent, false),mLitener);
+            return new BannerHolder(mInflater.inflate(R.layout.item_main_banner, parent, false),mListener);
         } else if (viewType == TYPE_MENU) {
-            return new MenuHolder(mInflater.inflate(R.layout.item_main_menu, parent, false),mLitener);
+            return new MenuHolder(mInflater.inflate(R.layout.item_main_menu, parent, false),mListener);
         } else if(viewType == TYPE_LIST){
-            return new ListHolder(mInflater.inflate(R.layout.item_main_list, parent, false),mLitener);
+            return new ListHolder(mInflater.inflate(R.layout.item_main_list, parent, false),mListener);
         } else if(viewType == TYPE_LOAD_MORE){
-            loadMoreHolder = new LoadMoreHolder(mInflater.inflate(R.layout.item_load_more, parent, false),mLitener);
+            loadMoreHolder = new LoadMoreHolder(mInflater.inflate(R.layout.item_load_more, parent, false),mListener);
             return loadMoreHolder;
         }else{
             return null;

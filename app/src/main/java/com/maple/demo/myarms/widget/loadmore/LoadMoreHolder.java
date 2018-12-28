@@ -1,6 +1,5 @@
 package com.maple.demo.myarms.widget.loadmore;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,7 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maple.demo.myarms.R;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
+import com.maple.demo.myarms.mvp.ui.adapter.listener.OnMainItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,8 +21,8 @@ public class LoadMoreHolder extends RecyclerView.ViewHolder {
     ProgressBar pb;
     @BindView(R.id.tv_load_more)
     TextView tv;
-    private OnMainItemClickLitener mListener;
-    public LoadMoreHolder(@NonNull View itemView, OnMainItemClickLitener listener) {
+    private OnMainItemClickListener mListener;
+    public LoadMoreHolder(@NonNull View itemView, OnMainItemClickListener listener) {
         super(itemView);
         this.mListener = listener;
         ButterKnife.bind(this, itemView);

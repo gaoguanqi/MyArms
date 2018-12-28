@@ -13,9 +13,7 @@ import com.jess.arms.http.imageloader.glide.ImageConfigImpl;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.model.entity.ListEntity;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
-
-import java.util.List;
+import com.maple.demo.myarms.mvp.ui.adapter.listener.OnMainItemClickListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,8 +35,8 @@ public class ListHolder extends RecyclerView.ViewHolder {
      * 用于加载图片的管理类, 默认使用 Glide, 使用策略模式, 可替换框架
      */
     private ImageLoader mImageLoader;
-    private OnMainItemClickLitener mListener;
-    public ListHolder(@NonNull View itemView,OnMainItemClickLitener listener) {
+    private OnMainItemClickListener mListener;
+    public ListHolder(@NonNull View itemView,OnMainItemClickListener listener) {
         super(itemView);
         this.mListener = listener;
         ButterKnife.bind(this,itemView);

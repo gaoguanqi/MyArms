@@ -8,8 +8,7 @@ import android.view.View;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.ui.adapter.MenuAdapter;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMainItemClickLitener;
-import com.maple.demo.myarms.mvp.ui.adapter.litener.OnMenuItemClickLitener;
+import com.maple.demo.myarms.mvp.ui.adapter.listener.OnMainItemClickListener;
 
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class MenuHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.menu_recycler)
     RecyclerView recycler;
     private MenuAdapter mMenuAdapter;
-    private OnMainItemClickLitener mListener;
+    private OnMainItemClickListener mListener;
 
-    public MenuHolder(@NonNull View itemView,OnMainItemClickLitener listener) {
+    public MenuHolder(@NonNull View itemView,OnMainItemClickListener listener) {
         super(itemView);
         this.mListener = listener;
         ButterKnife.bind(this,itemView);
@@ -37,7 +36,7 @@ public class MenuHolder extends RecyclerView.ViewHolder {
         recycler.setLayoutManager(manager);
         recycler.setAdapter(mMenuAdapter);
         if(mListener != null){
-            mMenuAdapter.setOnMenuItemClickLitener(entity ->{
+            mMenuAdapter.setOnClickListener(entity ->{
                 mListener.onMenuItemClick(entity);
             });
         }
