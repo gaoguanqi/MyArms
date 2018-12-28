@@ -108,12 +108,12 @@ public class SlideActivity extends BaseViewActivity<SlidePresenter> implements S
             switch (msg.what){
                 case WHAT_INIT_DATA:
                     if(weakReference.get().isSafeMultipleStatusView()){
+                        weakReference.get().hideMyLoading();
                         weakReference.get().mMultipleStatusView.showError();
                     }
                     break;
                 case WHAT_RETRY_DATA:
                     if(weakReference.get().isSafeMultipleStatusView()){
-                        weakReference.get().hideMyLoading();
                         weakReference.get().mMultipleStatusView.showContent();
                     }
                     break;
