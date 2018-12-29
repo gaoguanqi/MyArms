@@ -19,6 +19,7 @@ import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseActivity;
 import com.maple.demo.myarms.app.base.BaseFragment;
 import com.maple.demo.myarms.app.db.UserDao;
+import com.maple.demo.myarms.app.global.AppController;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerHomeComponent;
 import com.maple.demo.myarms.di.module.HomeModule;
@@ -29,6 +30,7 @@ import com.maple.demo.myarms.mvp.ui.fragment.MainFragment;
 import com.maple.demo.myarms.mvp.ui.fragment.MineFragment;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.maple.demo.myarms.widget.SwitchSlideViewPager;
+import com.meituan.android.walle.WalleChannelReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +119,10 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setCurrentItem(TAB_HOME);
         //mPresenter.update();
+        String channel= WalleChannelReader.getChannel(AppController.getInstance().getApplication());
+        // 或者也可以直接根据key获取
+        String install_channel = WalleChannelReader.get(AppController.getInstance().getApplication(), "INSTALL_CHANNEL");
+        ToastUtil.showToast("walle渠道名:"+channel +"---渠道号："+install_channel);
     }
 
     @Override

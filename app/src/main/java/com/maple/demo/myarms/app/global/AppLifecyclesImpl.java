@@ -19,6 +19,7 @@ import com.maple.demo.myarms.BuildConfig;
 import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.maple.demo.myarms.widget.update.OKHttpUpdateHttpService;
+import com.meituan.android.walle.WalleChannelReader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.xuexiang.xupdate.XUpdate;
@@ -80,8 +81,6 @@ public class AppLifecyclesImpl implements AppLifecycles {
         initCrashUtils();
         initUtils(application);
         initUpdate(application);
-
-
     }
 
     @SuppressLint("MissingPermission")

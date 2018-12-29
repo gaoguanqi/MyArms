@@ -112,16 +112,17 @@ ext {
             "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
             "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
             "multiple-status-view"          : "com.classic.common:multiple-status-view:1.5.1",
-            "immersionbar"          : "com.gyf.immersionbar:immersionbar:2.3.3-beta09",
+            "immersionbar"               : "com.gyf.immersionbar:immersionbar:2.3.3-beta09",
             //app
-            "utilcode"          : "com.blankj:utilcode:1.22.3",
-            "cookiebar2"          : "org.aviran.cookiebar2:cookiebar2:1.1.0",
-            "XUpdate"          : "com.github.xuexiangjys:XUpdate:1.0.6",
-            "okhttp-utils"          : "com.qianwen:okhttp-utils:3.8.0",
-            "banner"          : "com.youth.banner:banner:1.4.10",
-            "GSYVideoPlayer"          : "com.shuyu:GSYVideoPlayer:6.0.2",
+            "utilcode"                   : "com.blankj:utilcode:1.22.3",
+            "cookiebar2"                 : "org.aviran.cookiebar2:cookiebar2:1.1.0",
+            "XUpdate"                       : "com.github.xuexiangjys:XUpdate:1.0.6",
+            "okhttp-utils"                   : "com.qianwen:okhttp-utils:3.8.0",
+            "banner"                          : "com.youth.banner:banner:1.4.10",
+            "GSYVideoPlayer"                : "com.shuyu:GSYVideoPlayer:6.0.2",
+            "walle"                         : "com.meituan.android.walle:library:1.1.6",
             //-------------------------//
-            "mvp-arms"              : "me.jessyan:arms:2.5.0",
+            "mvp-arms"                        : "me.jessyan:arms:2.5.0",
 
     ]
 

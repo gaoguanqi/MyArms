@@ -50,6 +50,7 @@
         <activity android:name=".mvp.ui.activity.LoginActivity" />
         <activity android:name=".mvp.ui.activity.VideoPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
+
     </application>
 
 </manifest>
