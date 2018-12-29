@@ -1,3 +1,3 @@
 password : gaoguanqi
 account  : gaoguanqi
-alias    : Maple
+alias    : maple

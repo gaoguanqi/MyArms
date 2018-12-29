@@ -78,7 +78,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
                 .put(RefWatcher.class.getName(),
                 BuildConfig.DEBUG ? LeakCanary.install(application) : RefWatcher.DISABLED);
 
-        initCrashUtils();
+       //initCrashUtils();
         initUtils(application);
         initUpdate(application);
     }
