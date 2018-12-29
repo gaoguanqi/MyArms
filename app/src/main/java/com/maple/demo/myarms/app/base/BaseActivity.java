@@ -133,6 +133,12 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(mLoadingDialog != null){
+            if(mLoadingDialog.isShowing()){
+                mLoadingDialog.cancel();
+            }
+            mLoadingDialog = null;
+        }
         // 必须调用该方法，防止内存泄漏
         if(useImmersionBar() && mImmersionBar != null){
             mImmersionBar.destroy();
@@ -322,21 +328,15 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         }
     }
 
-    protected void onToolbarSetting() {
+    protected void onToolbarSetting() { }
 
-    }
-
-    protected void onToolbarSettingText() {
-
-    }
+    protected void onToolbarSettingText() { }
 
     protected void onToolbarBack() {
         this.finish();
     }
 
-    protected void onToolbarBackText() {
-
-    }
+    protected void onToolbarBackText() { }
 
     @Override
     public void onNetState(NetworkUtils.NetworkType type) {

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.maple.demo.myarms.BuildConfig;
 
-
 public final class LogUtils {
 
     private LogUtils() {
@@ -14,7 +13,6 @@ public final class LogUtils {
 
     private static boolean isShow = BuildConfig.DEBUG;
     //private static boolean isShow = true;
-
     public static void logGGQ(String msg){
         if(isShow){
             Log.i("GGQ", msg);
