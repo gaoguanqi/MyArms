@@ -1,5 +1,7 @@
 package com.maple.demo.myarms.app.base;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -7,9 +9,10 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 
 import com.classic.common.MultipleStatusView;
+import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.mvp.IPresenter;
-import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
+import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.utils.ToastUtil;
 
 import butterknife.ButterKnife;
@@ -21,6 +24,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivity<T> implements View.OnClickListener {
     protected MultipleStatusView mMultipleStatusView;
+    protected ViewStub viewStubTitle;
     @Override
     protected void setContentView(@Nullable Bundle savedInstanceState) {
         int layoutResID = initView(savedInstanceState);
@@ -34,7 +38,7 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
             //绑定到butterknife
             mUnbinder = ButterKnife.bind(this);
             if(useToolBar()){
-                ViewStub viewStubTitle = findViewById(R.id.view_stub_title);
+                 viewStubTitle = findViewById(R.id.view_stub_title);
                 if (viewStubTitle != null) {
                     viewStubTitle.inflate();
                     initToolbar();
@@ -79,5 +83,37 @@ public abstract class BaseViewActivity<T extends IPresenter> extends BaseActivit
 
     protected void onClickRetry() {
         ToastUtil.showToast("刷新数据");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(useImmersionBar()){
+            LogUtils.logGGQ("屏幕旋转："+newConfig.orientation);
+
+            if(newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_USER) { //屏幕布局模式为横排时
+                ToastUtil.showToast("横屏");
+                mImmersionBar = ImmersionBar.with(this);
+                mImmersionBar.statusBarColor(R.color.trans);
+                mImmersionBar.fitsSystemWindows(false);
+                mImmersionBar.init();
+                if(useToolBar()){
+                    if(viewStubTitle != null){
+                        viewStubTitle.setVisibility(View.GONE);
+                    }
+                }
+            }else if(newConfig.orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){ //屏幕布局模式为竖排时
+                ToastUtil.showToast("竖屏");
+                mImmersionBar = ImmersionBar.with(this);
+                mImmersionBar.statusBarColor(R.color.color_status);
+                mImmersionBar.fitsSystemWindows(true);
+                mImmersionBar.init();
+                if(useToolBar()){
+                    if(viewStubTitle != null){
+                        viewStubTitle.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
     }
 }

@@ -43,10 +43,4 @@ public class VideoPlayerModule {
     LinearLayoutManager provideLinearLayoutManager() {
         return new LinearLayoutManager(view.getActivity());
     }
-
-    @ActivityScope
-    @Provides
-    PlayerAdapter providePlayerAdapter() {
-        return new PlayerAdapter(view.getActivity());
-    }
 }

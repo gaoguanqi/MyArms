@@ -15,6 +15,7 @@ import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.mvp.model.entity.PlayerEntity;
 import com.maple.demo.myarms.mvp.ui.adapter.listener.OnPlayerItemClickListener;
+import com.maple.demo.myarms.widget.player.PlayerView;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;
@@ -29,13 +30,13 @@ import butterknife.ButterKnife;
  */
 public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolder> {
 
-    private static final String TAG = "PLAYER";
+
+    public static final String TAG = "PLAYER";
     private Context mContext;
 
     private List<PlayerEntity> mData;
 
     private OnPlayerItemClickListener mListener;
-
 
     private AppComponent mAppComponent;
     /**
@@ -43,8 +44,9 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
      */
     private ImageLoader mImageLoader;
 
-    public PlayerAdapter(Context context) {
+    public PlayerAdapter(Context context,List<PlayerEntity> data) {
         this.mContext = context;
+        this.mData = data;
     }
     public void setOnClickLitener(OnPlayerItemClickListener listener){
         this.mListener = listener;
@@ -53,7 +55,8 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PlayerAdapter.ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_player, parent, false));
+        ViewHolder holder = new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_player, parent, false));
+        return holder;
     }
 
     @Override
@@ -71,14 +74,9 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
         return mData == null || mData.isEmpty() ? 0 :mData.size();
     }
 
-    public void setData(List<PlayerEntity> data) {
-        this.mData = data;
-        notifyDataSetChanged();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.player)
-        StandardGSYVideoPlayer player;
+        PlayerView player;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -87,6 +85,7 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
         }
 
         public void setData(int position,PlayerEntity data) {
+
             //增加封面
             ImageView imageView = new ImageView(mContext);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -96,7 +95,6 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
                             .url(data.getImage())
                             .imageView(imageView)
                             .build());
-
             player.setThumbImageView(imageView);
 
             player.setUpLazy(data.getUrl(), true, null, null, data.getTitle());
@@ -119,11 +117,14 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
             //是否根据视频尺寸，自动选择竖屏全屏或者横屏全屏
             player.setAutoFullWithSize(true);
             //音频焦点冲突时是否释放
-            player.setReleaseWhenLossAudio(false);
+            player.setReleaseWhenLossAudio(true);
             //全屏动画
             player.setShowFullAnimation(true);
             //小屏时不触摸滑动
             player.setIsTouchWiget(false);
+
+
+
         }
     }
 }

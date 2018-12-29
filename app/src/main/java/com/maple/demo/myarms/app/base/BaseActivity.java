@@ -71,6 +71,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
 
+    private View toolbar;
     protected ImmersionBar mImmersionBar;
     private NetBroadcastReceiver mNetBroadcastReceiver;
     private CustomDialog mLoadingDialog;
@@ -240,7 +241,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     public void initToolbar() {
-        View toolbar = findViewById(R.id.toolbar);
+         toolbar = findViewById(R.id.toolbar);
         if (toolbar == null) {
             return;
         }
@@ -294,7 +295,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         if(useImmersionBar()){
             // 如果你的app可以横竖屏切换，并且适配4.4或者emui3手机请务必在onConfigurationChanged方法里添加这句话
             mImmersionBar = ImmersionBar.with(this);
-            //设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度
             mImmersionBar.init();
         }
     }

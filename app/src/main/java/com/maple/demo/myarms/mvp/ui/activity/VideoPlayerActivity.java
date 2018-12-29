@@ -2,6 +2,8 @@ package com.maple.demo.myarms.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
@@ -23,6 +26,7 @@ import com.maple.demo.myarms.mvp.contract.VideoPlayerContract;
 import com.maple.demo.myarms.mvp.model.entity.PlayerEntity;
 import com.maple.demo.myarms.mvp.presenter.VideoPlayerPresenter;
 import com.maple.demo.myarms.mvp.ui.adapter.PlayerAdapter;
+import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
@@ -43,8 +47,8 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
 
     @Inject
     LinearLayoutManager mLinearLayoutManager;
-    @Inject
-    PlayerAdapter mAdapter;
+
+    private PlayerAdapter mAdapter;
     private List<PlayerEntity> mData;
     private PlayerEntity mEntity;
 
@@ -93,8 +97,6 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
             }
         };
         snapHelper.attachToRecyclerView(recycler);
-        mAdapter.setData(mData);
-        recycler.setAdapter(mAdapter);
 
         mEntity = new PlayerEntity();
         mEntity.setTitle("1");
@@ -112,10 +114,10 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
         if(isSafeMultipleStatusView()){
             mMultipleStatusView.showContent();
         }
-        mAdapter.setData(mData);
 
 
-
+        mAdapter = new PlayerAdapter(this,mData);
+        recycler.setAdapter(mAdapter);
 
 
     }
