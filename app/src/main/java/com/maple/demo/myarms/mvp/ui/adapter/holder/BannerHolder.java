@@ -23,8 +23,8 @@ import butterknife.ButterKnife;
  */
 public class BannerHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.banner)
-    Banner banner;
+        @BindView(R.id.banner)
+        Banner banner;
 
     private List<String> title,url;
     private OnMainItemClickListener mListener;
@@ -59,4 +59,6 @@ public class BannerHolder extends RecyclerView.ViewHolder {
                     .start();
         }
     }
+
+
 }

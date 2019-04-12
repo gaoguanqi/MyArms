@@ -2,9 +2,6 @@ package com.maple.demo.myarms.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewTreeObserver;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
@@ -26,7 +21,6 @@ import com.maple.demo.myarms.mvp.contract.VideoPlayerContract;
 import com.maple.demo.myarms.mvp.model.entity.PlayerEntity;
 import com.maple.demo.myarms.mvp.presenter.VideoPlayerPresenter;
 import com.maple.demo.myarms.mvp.ui.adapter.PlayerAdapter;
-import com.maple.demo.myarms.utils.LogUtils;
 import com.maple.demo.myarms.utils.ToastUtil;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
@@ -98,17 +92,26 @@ public class VideoPlayerActivity extends BaseViewActivity<VideoPlayerPresenter> 
         };
         snapHelper.attachToRecyclerView(recycler);
 
+
         mEntity = new PlayerEntity();
         mEntity.setTitle("1");
-        mEntity.setUrl("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        mEntity.setUrl("rtmp://202.69.69.180:443/webcast/bshdlive-pc");
         mEntity.setImage("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
         mData.add(mEntity);
 
         mEntity = new PlayerEntity();
         mEntity.setTitle("2");
-        mEntity.setUrl("http://wdquan-space.b0.upaiyun.com/VIDEO/2018/11/22/ae0645396048_hls_time10.m3u8");
+        mEntity.setUrl("http://112.50.243.8/PLTV/88888888/224/3221225805/1.m3u8");
         mEntity.setImage("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
         mData.add(mEntity);
+
+
+        mEntity = new PlayerEntity();
+        mEntity.setTitle("3");
+        mEntity.setUrl("rtmp://live.hkstv.hk.lxdns.com/live/hks1");
+        mEntity.setImage("http://img5.imgtn.bdimg.com/it/u=517297135,2728824910&fm=26&gp=0.jpg");
+        mData.add(mEntity);
+
 
 
         if(isSafeMultipleStatusView()){

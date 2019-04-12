@@ -118,11 +118,12 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.setOffscreenPageLimit(fragments.size());
         viewPager.setCurrentItem(TAB_HOME);
-        //mPresenter.update();
+        mPresenter.update();
         String channel= WalleChannelReader.getChannel(AppController.getInstance().getApplication());
         // 或者也可以直接根据key获取
         String install_channel = WalleChannelReader.get(AppController.getInstance().getApplication(), "INSTALL_CHANNEL");
         ToastUtil.showToast("walle渠道名:"+channel +"---渠道号："+install_channel);
+
     }
 
     @Override

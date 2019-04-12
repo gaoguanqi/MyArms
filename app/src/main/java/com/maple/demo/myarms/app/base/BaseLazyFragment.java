@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.jess.arms.mvp.IPresenter;
+import com.maple.demo.myarms.utils.LogUtils;
 
 /**
  * author: gaogq
@@ -83,28 +84,32 @@ public abstract class BaseLazyFragment<P extends IPresenter> extends BaseViewFra
      * 懒加载页面view
      */
     protected void lazyLoadView() {
-
+        String title = getToolbarConfig().title;
+        LogUtils.logGGQ("懒加载页面view:"+title);
     }
 
     /**
      * 懒加载页面网络数据
      */
     protected void lazyLoadData() {
-
+        String title = getToolbarConfig().title;
+        LogUtils.logGGQ("懒加载页面网络数据:"+title);
     }
 
     /**
      * 页面不可见的时候回调
      */
     protected void onInvisible() {
-
+        String title = getToolbarConfig().title;
+        LogUtils.logGGQ("页面不可见的时候回调："+title);
     }
 
     /**
      * 页面可见的时候回调
      */
     protected void onVisible() {
-
+        String title = getToolbarConfig().title;
+        LogUtils.logGGQ("页面可见的时候回调:"+title);
     }
 
     @Override

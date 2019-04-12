@@ -89,12 +89,13 @@ public class PlayerAdapter extends  RecyclerView.Adapter<PlayerAdapter.ViewHolde
             //增加封面
             ImageView imageView = new ImageView(mContext);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            mImageLoader.loadImage(itemView.getContext(),
-                    ImageConfigImpl
-                            .builder()
-                            .url(data.getImage())
-                            .imageView(imageView)
-                            .build());
+            imageView.setBackgroundResource(R.mipmap.ic_launcher);
+//            mImageLoader.loadImage(itemView.getContext(),
+//                    ImageConfigImpl
+//                            .builder()
+//                            .url(data.getImage())
+//                            .imageView(imageView)
+//                            .build());
             player.setThumbImageView(imageView);
 
             player.setUpLazy(data.getUrl(), true, null, null, data.getTitle());

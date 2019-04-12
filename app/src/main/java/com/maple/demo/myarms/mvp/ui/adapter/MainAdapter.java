@@ -54,7 +54,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LogUtils.logGGQ("-type:::"+viewType);
+       // LogUtils.logGGQ("-type:::"+viewType);
         if (viewType == TYPE_BANNER) {
             return new BannerHolder(mInflater.inflate(R.layout.item_main_banner, parent, false),mListener);
         } else if (viewType == TYPE_MENU) {
@@ -71,13 +71,13 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        LogUtils.logGGQ("onBindViewHolder:::"+position);
+       // LogUtils.logGGQ("onBindViewHolder:::"+position);
         if (holder instanceof BannerHolder) {
             ((BannerHolder) holder).setData(mBannerData);
         }else if(holder instanceof MenuHolder){
             ((MenuHolder) holder).setData(mMenuData);
         }else if(holder instanceof ListHolder) {
-            LogUtils.logGGQ("ListHolder:::"+position);
+           // LogUtils.logGGQ("ListHolder:::"+position);
             ((ListHolder) holder).setData(mListData.get(position - 2));
         }else if(holder instanceof LoadMoreHolder) {
             ((LoadMoreHolder) holder).setData(isLoadMore);
@@ -93,7 +93,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public int getItemViewType(int position) {
         //return super.getItemViewType(position);
-        LogUtils.logGGQ("getItemViewType:::"+position +"--getItemCount::"+getItemCount());
+       // LogUtils.logGGQ("getItemViewType:::"+position +"--getItemCount::"+getItemCount());
         if (position == 0) {
             return TYPE_BANNER;
         }else if (position == 1) {

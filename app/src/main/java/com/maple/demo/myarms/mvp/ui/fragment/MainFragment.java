@@ -23,6 +23,7 @@ import com.maple.demo.myarms.mvp.model.entity.BannerEntity;
 import com.maple.demo.myarms.mvp.model.entity.ListEntity;
 import com.maple.demo.myarms.mvp.model.entity.MenuEntity;
 import com.maple.demo.myarms.mvp.presenter.MainPresenter;
+import com.maple.demo.myarms.mvp.ui.activity.GlideActivity;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
 import com.maple.demo.myarms.mvp.ui.activity.VideoPlayerActivity;
 import com.maple.demo.myarms.mvp.ui.adapter.MainAdapter;
@@ -231,6 +232,7 @@ public class MainFragment extends BaseLazyFragment<MainPresenter> implements Mai
     @Override
     public void onBannerItemClick(int pos) {
         showMessage("点击banner："+pos);
+        launchActivity(new Intent(getActivity(), GlideActivity.class));
     }
     @Override
     public void onMenuItemClick(MenuEntity entity) {

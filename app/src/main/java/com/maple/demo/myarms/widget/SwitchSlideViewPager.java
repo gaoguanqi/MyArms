@@ -44,4 +44,5 @@ public class SwitchSlideViewPager extends ViewPager {
             return super.onTouchEvent(ev);
         }
     }
+
 }

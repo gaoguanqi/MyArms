@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
-import com.maple.demo.myarms.app.base.BaseViewFragment;
+import com.maple.demo.myarms.app.base.BaseLazyFragment;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerMineComponent;
 import com.maple.demo.myarms.di.module.MineModule;
@@ -21,14 +21,18 @@ import com.maple.demo.myarms.mvp.contract.MineContract;
 import com.maple.demo.myarms.mvp.presenter.MinePresenter;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
 import com.maple.demo.myarms.mvp.ui.activity.VideoPlayerActivity;
+import com.maple.demo.myarms.mvp.ui.activity.ViewFlipperActivity;
+import com.maple.demo.myarms.mvp.ui.activity.WebActivity;
 import com.maple.demo.myarms.utils.ToastUtil;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
-public class MineFragment extends BaseViewFragment<MinePresenter> implements MineContract.View {
+public class MineFragment extends BaseLazyFragment<MinePresenter> implements MineContract.View {
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -52,7 +56,7 @@ public class MineFragment extends BaseViewFragment<MinePresenter> implements Min
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        if(isSafeMultipleStatusView()){
+        if (isSafeMultipleStatusView()) {
             mMultipleStatusView.showContent();
         }
     }
@@ -144,8 +148,27 @@ public class MineFragment extends BaseViewFragment<MinePresenter> implements Min
                 .build();
     }
 
-    @OnClick(R.id.btn_player)
-    public void onViewClicked() {
-        launchActivity(new Intent(getActivity(), VideoPlayerActivity.class));
+
+
+
+    @OnClick({R.id.btn_player, R.id.btn_web,R.id.btn_view_flipper})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_player:
+                launchActivity(new Intent(getActivity(), VideoPlayerActivity.class));
+                break;
+            case R.id.btn_web:
+                launchActivity(new Intent(getActivity(), WebActivity.class));
+                break;
+            case R.id.btn_view_flipper:
+                launchActivity(new Intent(getActivity(), ViewFlipperActivity.class));
+                break;
+            default:
+        }
     }
+
+//    @OnClick(R.id.btn_player)
+//    public void onViewClicked() {
+//        launchActivity(new Intent(getActivity(), VideoPlayerActivity.class));
+//    }
 }

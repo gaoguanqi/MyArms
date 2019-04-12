@@ -10,21 +10,18 @@ import com.jess.arms.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
-import com.maple.demo.myarms.mvp.contract.RegisteContract;
-import com.maple.demo.myarms.mvp.model.api.ApiService;
-
-import io.reactivex.Observable;
+import com.maple.demo.myarms.mvp.contract.ViewFlipperContract;
 
 
 @ActivityScope
-public class RegisteModel extends BaseModel implements RegisteContract.Model {
+public class ViewFlipperModel extends BaseModel implements ViewFlipperContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public RegisteModel(IRepositoryManager repositoryManager) {
+    public ViewFlipperModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 
@@ -33,10 +30,5 @@ public class RegisteModel extends BaseModel implements RegisteContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
-    }
-
-    @Override
-    public Observable<String> test(String id) {
-        return mRepositoryManager.obtainRetrofitService(ApiService.class).test(id);
     }
 }

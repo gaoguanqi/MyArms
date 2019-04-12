@@ -24,5 +24,7 @@ public interface ApiService {
     @POST(AppConfig.BASE_URL + "/user/account/login")
     Observable<BaseEntity<UserEntity>> login(@Field("phone") String phone, @Field("password") String password);
 
-
+    @FormUrlEncoded
+    @POST("http://172.16.11.145:8080/zch/provinces/city.do")
+    Observable<String> test(@Field("provincesId") String id);
 }

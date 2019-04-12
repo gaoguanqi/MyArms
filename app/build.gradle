@@ -6,7 +6,7 @@ apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'walle'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    //buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     useLibrary 'org.apache.http.legacy'
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
@@ -94,7 +94,7 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-   // implementation rootProject.ext.dependencies["design"]
+    // implementation rootProject.ext.dependencies["design"]
     implementation(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
@@ -111,6 +111,7 @@ dependencies {
     implementation rootProject.ext.dependencies["GreenDaoUpgradeHelper"]
 
     implementation rootProject.ext.dependencies["arms-glide"]
+    implementation rootProject.ext.dependencies["glide-transformations"]
     implementation rootProject.ext.dependencies["progressmanager"]
     implementation rootProject.ext.dependencies["retrofit-url-manager"]
     implementation rootProject.ext.dependencies["eventbus"]

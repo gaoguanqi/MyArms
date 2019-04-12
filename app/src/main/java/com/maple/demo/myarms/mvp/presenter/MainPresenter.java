@@ -145,7 +145,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         // menu
         mMenuData.clear();
         mMenuEntity = new MenuEntity();
-        mMenuEntity.setImage("https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=f23b0796b74543a9f11bfdce2e178a7b/8b13632762d0f703d0ad4cbe08fa513d2697c5b1.jpg");
+        //mMenuEntity.setImage("https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=f23b0796b74543a9f11bfdce2e178a7b/8b13632762d0f703d0ad4cbe08fa513d2697c5b1.jpg");
+        mMenuEntity.setImage("http://120.131.8.61/f/img/videoandlive/20190125/97ab4d5f8ee64e4e9453190c65bc44c1.png");
         mMenuEntity.setText("新百科");
         mMenuData.add(mMenuEntity);
         mMenuData.addAll(mMenuData);

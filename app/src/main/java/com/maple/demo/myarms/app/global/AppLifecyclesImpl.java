@@ -22,6 +22,7 @@ import com.maple.demo.myarms.widget.update.OKHttpUpdateHttpService;
 import com.meituan.android.walle.WalleChannelReader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.smtt.sdk.QbSdk;
 import com.xuexiang.xupdate.XUpdate;
 import com.xuexiang.xupdate.entity.UpdateError;
 import com.xuexiang.xupdate.listener.OnUpdateFailureListener;
@@ -80,6 +81,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
 
        //initCrashUtils();
         initUtils(application);
+        initX5sdk(application);
         initUpdate(application);
     }
 
@@ -125,7 +127,21 @@ public class AppLifecyclesImpl implements AppLifecycles {
     private void initUtils(Application application) {
         Utils.init(application);
     }
+    private void initX5sdk(Application application) {
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
 
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                LogUtils.logGGQ("加载X5.内核：" + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+
+            }
+        };
+        QbSdk.initX5Environment(application, cb);
+    }
 
     @Override
     public void onTerminate(Application application) {
