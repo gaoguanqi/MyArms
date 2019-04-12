@@ -144,7 +144,13 @@ public class UserDao {
      * @return User对象
      */
     public UserEntity getUser() {
-        return getUserInfoDao().loadAll().get(0);
+        List<UserEntity> list = getAllUser();
+        if(list != null && !list.isEmpty()){
+            return list.get(0);
+        }else {
+            return null;
+
+        }
     }
 
 

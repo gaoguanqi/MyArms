@@ -9,15 +9,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.maple.demo.myarms.R;
 import com.maple.demo.myarms.app.base.BaseLazyFragment;
+import com.maple.demo.myarms.app.db.UserDao;
 import com.maple.demo.myarms.app.manager.toolbar.ToolbarConfig;
 import com.maple.demo.myarms.di.component.DaggerMineComponent;
 import com.maple.demo.myarms.di.module.MineModule;
 import com.maple.demo.myarms.mvp.contract.MineContract;
+import com.maple.demo.myarms.mvp.model.entity.UserEntity;
 import com.maple.demo.myarms.mvp.presenter.MinePresenter;
 import com.maple.demo.myarms.mvp.ui.activity.HomeActivity;
 import com.maple.demo.myarms.mvp.ui.activity.VideoPlayerActivity;
@@ -25,6 +28,7 @@ import com.maple.demo.myarms.mvp.ui.activity.ViewFlipperActivity;
 import com.maple.demo.myarms.mvp.ui.activity.WebActivity;
 import com.maple.demo.myarms.utils.ToastUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -34,6 +38,8 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 public class MineFragment extends BaseLazyFragment<MinePresenter> implements MineContract.View {
 
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
@@ -58,6 +64,11 @@ public class MineFragment extends BaseLazyFragment<MinePresenter> implements Min
     public void initData(@Nullable Bundle savedInstanceState) {
         if (isSafeMultipleStatusView()) {
             mMultipleStatusView.showContent();
+        }
+
+        UserEntity user = UserDao.getInstance().getUser();
+        if(user != null){
+            tvPhone.setText(user.getPhone());
         }
     }
 
